@@ -36,3 +36,6 @@ tags
 .#*
 .*.swp
 .DS_store
+*.xccheckout
+choco-xcode.xcodeproj/project.xcworkspace/xcuserdata/ioan.xcuserdatad
+choco-xcode.xcodeproj/xcuserdata/ioan.xcuserdatad
