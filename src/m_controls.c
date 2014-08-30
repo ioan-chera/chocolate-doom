@@ -44,7 +44,7 @@ int key_speed = KEY_RSHIFT;
  
 int key_flyup = KEY_PGUP;
 int key_flydown = KEY_INS;
-int key_flycenter = KEY_HOME;
+int key_flycenter = DOOM_KEY_HOME;
 
 int key_lookup = KEY_PGDN;
 int key_lookdown = KEY_DEL;
@@ -52,7 +52,7 @@ int key_lookcenter = KEY_END;
 
 int key_invleft = '[';
 int key_invright = ']';
-int key_useartifact = KEY_ENTER;
+int key_useartifact = DOOM_KEY_ENTER;
 
 //
 // Hexen key controls
@@ -60,7 +60,7 @@ int key_useartifact = KEY_ENTER;
 
 int key_jump = '/';
 
-int key_arti_all             = KEY_BACKSPACE;
+int key_arti_all             = DOOM_KEY_BACKSPACE;
 int key_arti_health          = '\\';
 int key_arti_poisonbag       = '0';
 int key_arti_blastradius     = '9';
@@ -83,10 +83,10 @@ int key_invquery  = 'q';
 int key_mission   = 'w';
 int key_invpop    = 'z';
 int key_invkey    = 'k';
-int key_invhome   = KEY_HOME;
+int key_invhome   = DOOM_KEY_HOME;
 int key_invend    = KEY_END;
-int key_invuse    = KEY_ENTER;
-int key_invdrop   = KEY_BACKSPACE;
+int key_invuse    = DOOM_KEY_ENTER;
+int key_invdrop   = DOOM_KEY_BACKSPACE;
 
 
 //
@@ -108,7 +108,7 @@ int mousebprevweapon = -1;
 int mousebnextweapon = -1;
 
 
-int key_message_refresh = KEY_ENTER;
+int key_message_refresh = DOOM_KEY_ENTER;
 int key_pause = KEY_PAUSE;
 int key_demo_quit = 'q';
 int key_spy = KEY_F12;
@@ -153,8 +153,8 @@ int key_menu_up        = KEY_UPARROW;
 int key_menu_down      = KEY_DOWNARROW;
 int key_menu_left      = KEY_LEFTARROW;
 int key_menu_right     = KEY_RIGHTARROW;
-int key_menu_back      = KEY_BACKSPACE;
-int key_menu_forward   = KEY_ENTER;
+int key_menu_back      = DOOM_KEY_BACKSPACE;
+int key_menu_forward   = DOOM_KEY_ENTER;
 int key_menu_confirm   = 'y';
 int key_menu_abort     = 'n';
 

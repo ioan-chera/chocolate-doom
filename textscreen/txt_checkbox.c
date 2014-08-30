@@ -29,7 +29,7 @@ static void TXT_CheckBoxSizeCalc(TXT_UNCAST_ARG(checkbox))
 
     // Minimum width is the string length + right-side space for padding
 
-    checkbox->widget.w = strlen(checkbox->label) + 5;
+    checkbox->widget.w = (unsigned)(strlen(checkbox->label) + 5);
     checkbox->widget.h = 1;
 }
 
@@ -65,7 +65,7 @@ static void TXT_CheckBoxDrawer(TXT_UNCAST_ARG(checkbox))
     TXT_SetWidgetBG(checkbox);
     TXT_DrawString(checkbox->label);
 
-    for (i=strlen(checkbox->label); i < w-5; ++i)
+    for (i=(int)strlen(checkbox->label); i < w-5; ++i)
     {
         TXT_DrawString(" ");
     }
@@ -82,7 +82,7 @@ static int TXT_CheckBoxKeyPress(TXT_UNCAST_ARG(checkbox), int key)
 {
     TXT_CAST_ARG(txt_checkbox_t, checkbox);
 
-    if (key == KEY_ENTER || key == ' ')
+    if (key == DOOM_KEY_ENTER || key == ' ')
     {
         *checkbox->variable = !*checkbox->variable;
         TXT_EmitSignal(checkbox, "changed");
@@ -100,7 +100,7 @@ static void TXT_CheckBoxMousePress(TXT_UNCAST_ARG(checkbox), int x, int y, int b
     {
         // Equivalent to pressing enter
 
-        TXT_CheckBoxKeyPress(checkbox, KEY_ENTER);
+        TXT_CheckBoxKeyPress(checkbox, DOOM_KEY_ENTER);
     }
 }
 

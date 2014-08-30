@@ -119,7 +119,7 @@ boolean M_WriteFile(char *name, void *source, int length)
     if (handle == NULL)
 	return false;
 
-    count = fwrite(source, 1, length, handle);
+    count = (int)fwrite(source, 1, length, handle);
     fclose(handle);
 	
     if (count < length)
@@ -146,10 +146,10 @@ int M_ReadFile(char *name, byte **buffer)
     // find the size of the file by seeking to the end and
     // reading the current position
 
-    length = M_FileLength(handle);
+    length = (int)M_FileLength(handle);
     
     buf = Z_Malloc (length, PU_STATIC, NULL);
-    count = fread(buf, 1, length, handle);
+    count = (int)fread(buf, 1, length, handle);
     fclose (handle);
 	
     if (count < length)
@@ -263,8 +263,8 @@ char *M_StrCaseStr(char *haystack, char *needle)
     unsigned int len;
     unsigned int i;
 
-    haystack_len = strlen(haystack);
-    needle_len = strlen(needle);
+    haystack_len = (unsigned)strlen(haystack);
+    needle_len = (unsigned)strlen(needle);
 
     if (haystack_len < needle_len)
     {
@@ -468,7 +468,7 @@ int M_vsnprintf(char *buf, size_t buf_len, const char *s, va_list args)
     if (result < 0 || result >= buf_len)
     {
         buf[buf_len - 1] = '\0';
-        result = buf_len - 1;
+        result = (int)(buf_len - 1);
     }
 
     return result;

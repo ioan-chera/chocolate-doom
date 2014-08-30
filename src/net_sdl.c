@@ -259,7 +259,7 @@ static void NET_SDL_SendPacket(net_addr_t *addr, net_packet_t *packet)
 
     sdl_packet.channel = 0;
     sdl_packet.data = packet->data;
-    sdl_packet.len = packet->len;
+    sdl_packet.len = (int)(packet->len);
     sdl_packet.address = ip;
 
     if (!SDLNet_UDP_Send(udpsocket, -1, &sdl_packet))

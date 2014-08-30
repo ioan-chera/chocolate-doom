@@ -225,12 +225,12 @@ static void OPL_Mix_Callback(void *udata,
 
         // Add emulator output to buffer.
 
-        FillBuffer(buffer + filled * 2, nsamples);
+        FillBuffer(buffer + filled * 2, (unsigned)nsamples);
         filled += nsamples;
 
         // Invoke callbacks for this point in time.
 
-        AdvanceTime(nsamples);
+        AdvanceTime((unsigned)nsamples);
     }
 }
 

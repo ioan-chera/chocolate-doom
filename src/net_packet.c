@@ -50,7 +50,7 @@ net_packet_t *NET_PacketDup(net_packet_t *packet)
 {
     net_packet_t *newpacket;
 
-    newpacket = NET_NewPacket(packet->len);
+    newpacket = NET_NewPacket((int)packet->len);
     memcpy(newpacket->data, packet->data, packet->len);
     newpacket->len = packet->len;
 
@@ -212,7 +212,7 @@ static void NET_IncreasePacket(net_packet_t *packet)
    
     packet->alloced *= 2;
 
-    newdata = Z_Malloc(packet->alloced, PU_STATIC, 0);
+    newdata = Z_Malloc((int)packet->alloced, PU_STATIC, 0);
 
     memcpy(newdata, packet->data, packet->len);
 

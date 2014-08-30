@@ -459,7 +459,7 @@ static int TranslateKey(SDL_keysym *sym)
       case SDLK_DOWN:	return KEY_DOWNARROW;
       case SDLK_UP:	return KEY_UPARROW;
       case SDLK_ESCAPE:	return KEY_ESCAPE;
-      case SDLK_RETURN:	return KEY_ENTER;
+      case SDLK_RETURN:	return DOOM_KEY_ENTER;
       case SDLK_TAB:	return KEY_TAB;
       case SDLK_F1:	return KEY_F1;
       case SDLK_F2:	return KEY_F2;
@@ -475,7 +475,7 @@ static int TranslateKey(SDL_keysym *sym)
       case SDLK_F12:	return KEY_F12;
       case SDLK_PRINT:  return KEY_PRTSCR;
 
-      case SDLK_BACKSPACE: return KEY_BACKSPACE;
+      case SDLK_BACKSPACE: return DOOM_KEY_BACKSPACE;
       case SDLK_DELETE:	return KEY_DEL;
 
       case SDLK_PAUSE:	return KEY_PAUSE;
@@ -525,7 +525,7 @@ static int TranslateKey(SDL_keysym *sym)
       case SDLK_KP_EQUALS:   return KEYP_EQUALS;
       case SDLK_KP_ENTER:    return KEYP_ENTER;
 
-      case SDLK_HOME: return KEY_HOME;
+      case SDLK_HOME: return DOOM_KEY_HOME;
       case SDLK_INSERT: return KEY_INS;
       case SDLK_END: return KEY_END;
       case SDLK_PAGEUP: return KEY_PGUP;

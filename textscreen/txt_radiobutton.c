@@ -29,7 +29,7 @@ static void TXT_RadioButtonSizeCalc(TXT_UNCAST_ARG(radiobutton))
 
     // Minimum width is the string length + right-side spaces for padding
 
-    radiobutton->widget.w = strlen(radiobutton->label) + 5;
+    radiobutton->widget.w = (unsigned)(strlen(radiobutton->label) + 5);
     radiobutton->widget.h = 1;
 }
 
@@ -66,7 +66,7 @@ static void TXT_RadioButtonDrawer(TXT_UNCAST_ARG(radiobutton))
 
     TXT_DrawString(radiobutton->label);
 
-    for (i=strlen(radiobutton->label); i < w-5; ++i)
+    for (i=(int)strlen(radiobutton->label); i < w-5; ++i)
     {
         TXT_DrawString(" ");
     }
@@ -83,7 +83,7 @@ static int TXT_RadioButtonKeyPress(TXT_UNCAST_ARG(radiobutton), int key)
 {
     TXT_CAST_ARG(txt_radiobutton_t, radiobutton);
 
-    if (key == KEY_ENTER || key == ' ')
+    if (key == DOOM_KEY_ENTER || key == ' ')
     {
         if (*radiobutton->variable != radiobutton->value)
         {
@@ -105,7 +105,7 @@ static void TXT_RadioButtonMousePress(TXT_UNCAST_ARG(radiobutton),
     {
         // Equivalent to pressing enter
 
-        TXT_RadioButtonKeyPress(radiobutton, KEY_ENTER);
+        TXT_RadioButtonKeyPress(radiobutton, DOOM_KEY_ENTER);
     }
 }
 

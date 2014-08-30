@@ -38,7 +38,6 @@
 		4F86E62F19AEFD70004A4834 /* i_timer.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F86E5CF19AEFD70004A4834 /* i_timer.c */; };
 		4F86E63019AEFD70004A4834 /* i_video.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F86E5D119AEFD70004A4834 /* i_video.c */; };
 		4F86E63119AEFD70004A4834 /* i_videohr.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F86E5D319AEFD70004A4834 /* i_videohr.c */; };
-		4F86E63219AEFD70004A4834 /* icon.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F86E5D519AEFD70004A4834 /* icon.c */; };
 		4F86E63319AEFD70004A4834 /* m_argv.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F86E5D619AEFD70004A4834 /* m_argv.c */; };
 		4F86E63419AEFD70004A4834 /* m_bbox.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F86E5D819AEFD70004A4834 /* m_bbox.c */; };
 		4F86E63519AEFD70004A4834 /* m_cheat.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F86E5DA19AEFD70004A4834 /* m_cheat.c */; };
@@ -235,7 +234,6 @@
 		4F86E5D219AEFD70004A4834 /* i_video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = i_video.h; path = src/i_video.h; sourceTree = SOURCE_ROOT; };
 		4F86E5D319AEFD70004A4834 /* i_videohr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = i_videohr.c; path = src/i_videohr.c; sourceTree = SOURCE_ROOT; };
 		4F86E5D419AEFD70004A4834 /* i_videohr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = i_videohr.h; path = src/i_videohr.h; sourceTree = SOURCE_ROOT; };
-		4F86E5D519AEFD70004A4834 /* icon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = icon.c; path = src/icon.c; sourceTree = SOURCE_ROOT; };
 		4F86E5D619AEFD70004A4834 /* m_argv.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = m_argv.c; path = src/m_argv.c; sourceTree = SOURCE_ROOT; };
 		4F86E5D719AEFD70004A4834 /* m_argv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = m_argv.h; path = src/m_argv.h; sourceTree = SOURCE_ROOT; };
 		4F86E5D819AEFD70004A4834 /* m_bbox.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = m_bbox.c; path = src/m_bbox.c; sourceTree = SOURCE_ROOT; };
@@ -579,7 +577,6 @@
 				4F86E5D219AEFD70004A4834 /* i_video.h */,
 				4F86E5D319AEFD70004A4834 /* i_videohr.c */,
 				4F86E5D419AEFD70004A4834 /* i_videohr.h */,
-				4F86E5D519AEFD70004A4834 /* icon.c */,
 				4F86E5D619AEFD70004A4834 /* m_argv.c */,
 				4F86E5D719AEFD70004A4834 /* m_argv.h */,
 				4F86E5D819AEFD70004A4834 /* m_bbox.c */,
@@ -913,7 +910,6 @@
 				4FD56F9419AF01DF00B1560C /* txt_inputbox.c in Sources */,
 				4F86E65119AEFD70004A4834 /* w_merge.c in Sources */,
 				4FD5704219B1F48600B1560C /* p_maputl.c in Sources */,
-				4F86E63219AEFD70004A4834 /* icon.c in Sources */,
 				4F86E63519AEFD70004A4834 /* m_cheat.c in Sources */,
 				4F86E61D19AEFD70004A4834 /* d_mode.c in Sources */,
 				4FD5704F19B1F48600B1560C /* r_data.c in Sources */,

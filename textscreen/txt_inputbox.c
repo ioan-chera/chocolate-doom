@@ -202,7 +202,7 @@ static int TXT_InputBoxKeyPress(TXT_UNCAST_ARG(inputbox), int key)
 
     if (!inputbox->editing)
     {
-        if (key == KEY_ENTER)
+        if (key == DOOM_KEY_ENTER)
         {
             StartEditing(inputbox);
             return 1;
@@ -210,7 +210,7 @@ static int TXT_InputBoxKeyPress(TXT_UNCAST_ARG(inputbox), int key)
 
         // Backspace or delete erases the contents of the box.
 
-        if ((key == KEY_DEL || key == KEY_BACKSPACE)
+        if ((key == KEY_DEL || key == DOOM_KEY_BACKSPACE)
          && inputbox->widget.widget_class == &txt_inputbox_class)
         {
             free(*((char **)inputbox->value));
@@ -220,7 +220,7 @@ static int TXT_InputBoxKeyPress(TXT_UNCAST_ARG(inputbox), int key)
         return 0;
     }
 
-    if (key == KEY_ENTER)
+    if (key == DOOM_KEY_ENTER)
     {
         FinishEditing(inputbox);
     }
@@ -230,7 +230,7 @@ static int TXT_InputBoxKeyPress(TXT_UNCAST_ARG(inputbox), int key)
         inputbox->editing = 0;
     }
 
-    if (key == KEY_BACKSPACE)
+    if (key == DOOM_KEY_BACKSPACE)
     {
         Backspace(inputbox);
     }
@@ -260,7 +260,7 @@ static void TXT_InputBoxMousePress(TXT_UNCAST_ARG(inputbox),
         {
             // Send a simulated keypress to start editing
 
-            TXT_WidgetKeyPress(inputbox, KEY_ENTER);
+            TXT_WidgetKeyPress(inputbox, DOOM_KEY_ENTER);
         }
     }
 }

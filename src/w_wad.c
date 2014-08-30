@@ -235,7 +235,7 @@ int W_CheckNumForName (char* name)
         {
             if (!strncasecmp(lump_p->name, name, 8))
             {
-                return lump_p - lumpinfo;
+                return (int)(lump_p - lumpinfo);
             }
         }
     } 
@@ -316,7 +316,7 @@ void W_ReadLump(unsigned int lump, void *dest)
 	
     I_BeginRead ();
 	
-    c = W_Read(l->wad_file, l->position, dest, l->size);
+    c = (int)W_Read(l->wad_file, l->position, dest, l->size);
 
     if (c < l->size)
     {

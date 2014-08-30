@@ -33,7 +33,7 @@ static void TXT_WindowActionSizeCalc(TXT_UNCAST_ARG(action))
     // Width is label length, plus key description length, plus '='
     // and two surrounding spaces.
 
-    action->widget.w = strlen(action->label) + strlen(buf) + 3;
+    action->widget.w = (unsigned)(strlen(action->label) + strlen(buf) + 3);
     action->widget.h = 1;
 }
 
@@ -128,7 +128,7 @@ static void WindowSelectCallback(TXT_UNCAST_ARG(widget), TXT_UNCAST_ARG(window))
 {
     TXT_CAST_ARG(txt_window_t, window);
 
-    TXT_WidgetKeyPress(window, KEY_ENTER);
+    TXT_WidgetKeyPress(window, DOOM_KEY_ENTER);
 }
 
 // An action with the name "close" the closes the window
@@ -159,7 +159,7 @@ txt_window_action_t *TXT_NewWindowSelectAction(txt_window_t *window)
 {
     txt_window_action_t *action;
 
-    action = TXT_NewWindowAction(KEY_ENTER, "Select");
+    action = TXT_NewWindowAction(DOOM_KEY_ENTER, "Select");
     TXT_SignalConnect(action, "pressed", WindowSelectCallback, window);
 
     return action;

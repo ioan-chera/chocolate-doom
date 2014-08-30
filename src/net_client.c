@@ -665,7 +665,7 @@ static void NET_CL_ParseGameData(net_packet_t *packet)
     {
         net_full_ticcmd_t cmd;
 
-        index = seq - recvwindow_start + i;
+        index = (int)(seq - recvwindow_start + i);
 
         if (!NET_ReadFullTiccmd(packet, &cmd, settings.lowres_turn))
         {

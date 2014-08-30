@@ -212,7 +212,7 @@ void TXT_DrawWindowFrame(const char *title, int x, int y, int w, int h)
             TXT_DrawString(" ");
         }
     
-        TXT_GotoXY(x + (w - strlen(title)) / 2, y + 1);
+        TXT_GotoXY((int)(x + (w - strlen(title)) / 2), y + 1);
         TXT_DrawString(title);
     }
 
@@ -293,7 +293,7 @@ void TXT_DrawString(const char *s)
         }
     }
 
-    TXT_GotoXY(x + strlen(s), y);
+    TXT_GotoXY((int)(x + strlen(s)), y);
 }
 
 static void PutUnicodeChar(unsigned int c)

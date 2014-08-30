@@ -1126,7 +1126,7 @@ static void NET_SV_ParseGameData(net_packet_t *packet, net_client_t *client)
             return;
         }
 
-        index = seq + i - recvwindow_start;
+        index = (int)(seq + i - recvwindow_start);
 
         if (index < 0 || index >= BACKUPTICS)
         {

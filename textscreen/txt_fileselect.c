@@ -87,7 +87,7 @@ static char *ExecReadOutput(char **argv)
             completed = 1;
         }
 
-        bytes = read(pipefd[0], buf, sizeof(buf));
+        bytes = (int)read(pipefd[0], buf, sizeof(buf));
 
         if (bytes < 0)
         {
@@ -640,7 +640,7 @@ static int TXT_FileSelectKeyPress(TXT_UNCAST_ARG(fileselect), int key)
 
     if (!fileselect->inputbox->editing
      && !TXT_GetModifierState(TXT_MOD_ALT)
-     && key == KEY_ENTER)
+     && key == DOOM_KEY_ENTER)
     {
         if (DoSelectFile(fileselect))
         {

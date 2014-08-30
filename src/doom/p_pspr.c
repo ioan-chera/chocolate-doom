@@ -753,9 +753,9 @@ A_FireCGun
 
     P_SetPsprite (player,
 		  ps_flash,
-		  weaponinfo[player->readyweapon].flashstate
+		  (statenum_t)(weaponinfo[player->readyweapon].flashstate
 		  + psp->state
-		  - &states[S_CHAIN1] );
+		  - &states[S_CHAIN1]) );
 
     P_BulletSlope (player->mo);
 	

@@ -862,7 +862,7 @@ static inline void Channel__GeneratePercussion(Channel *self, Chip* chip,
 	Bit32u tcVol;
 
 	self->old[0] = self->old[1];
-	self->old[1] = Operator__GetSample( Channel__Op(self, 0), mod ); 
+	self->old[1] = (Bit32s)Operator__GetSample( Channel__Op(self, 0), mod );
 
 	//When bassdrum is in AM mode first operator is ignoed
 	if ( chan->regC0 & 1 ) {
@@ -870,22 +870,22 @@ static inline void Channel__GeneratePercussion(Channel *self, Chip* chip,
 	} else {
 		mod = self->old[0];
 	}
-	sample = Operator__GetSample( Channel__Op(self, 1), mod ); 
+	sample = (Bit32s)Operator__GetSample( Channel__Op(self, 1), mod );
 
 	//Precalculate stuff used by other outputs
 	noiseBit = Chip__ForwardNoise(chip) & 0x1;
-	c2 = Operator__ForwardWave(Channel__Op(self, 2));
-	c5 = Operator__ForwardWave(Channel__Op(self, 5));
+	c2 = (Bit32u)Operator__ForwardWave(Channel__Op(self, 2));
+	c5 = (Bit32u)Operator__ForwardWave(Channel__Op(self, 5));
 	phaseBit = (((c2 & 0x88) ^ ((c2<<5) & 0x80)) | ((c5 ^ (c5<<2)) & 0x20)) ? 0x02 : 0x00;
 
 	//Hi-Hat
-	hhVol = Operator__ForwardVolume(Channel__Op(self, 2));
+	hhVol = (Bit32u)Operator__ForwardVolume(Channel__Op(self, 2));
 	if ( !ENV_SILENT( hhVol ) ) {
 		Bit32u hhIndex = (phaseBit<<8) | (0x34 << ( phaseBit ^ (noiseBit << 1 )));
 		sample += Operator__GetWave( Channel__Op(self, 2), hhIndex, hhVol );
 	}
 	//Snare Drum
-	sdVol = Operator__ForwardVolume( Channel__Op(self, 3) );
+	sdVol = (Bit32u)Operator__ForwardVolume( Channel__Op(self, 3) );
 	if ( !ENV_SILENT( sdVol ) ) {
 		Bit32u sdIndex = ( 0x100 + (c2 & 0x100) ) ^ ( noiseBit << 8 );
 		sample += Operator__GetWave( Channel__Op(self, 3), sdIndex, sdVol );
@@ -894,7 +894,7 @@ static inline void Channel__GeneratePercussion(Channel *self, Chip* chip,
 	sample += Operator__GetSample( Channel__Op(self, 4), 0 );
 
 	//Top-Cymbal
-	tcVol = Operator__ForwardVolume(Channel__Op(self, 5));
+	tcVol = (Bit32u)Operator__ForwardVolume(Channel__Op(self, 5));
 	if ( !ENV_SILENT( tcVol ) ) {
 		Bit32u tcIndex = (1 + phaseBit) << 8;
 		sample += Operator__GetWave( Channel__Op(self, 5), tcIndex, tcVol );
@@ -989,17 +989,17 @@ Channel* Channel__BlockTemplate(Channel *self, Chip* chip,
 		//Do unsigned shift so we can shift out all bits but still stay in 10 bit range otherwise
 		mod = (Bit32u)((self->old[0] + self->old[1])) >> self->feedback;
 		self->old[0] = self->old[1];
-		self->old[1] = Operator__GetSample( Channel__Op(self, 0), mod );
+		self->old[1] = (Bit32s)Operator__GetSample( Channel__Op(self, 0), mod );
 		sample = 0;
 		out0 = self->old[0];
 		if ( mode == sm2AM || mode == sm3AM ) {
-			sample = out0 + Operator__GetSample( Channel__Op(self, 1), 0 );
+			sample = (Bit32s)(out0 + Operator__GetSample( Channel__Op(self, 1), 0 ));
 		} else if ( mode == sm2FM || mode == sm3FM ) {
-			sample = Operator__GetSample( Channel__Op(self, 1), out0 );
+			sample = (Bit32s)Operator__GetSample( Channel__Op(self, 1), out0 );
 		} else if ( mode == sm3FMFM ) {
 			Bits next = Operator__GetSample( Channel__Op(self, 1), out0 );
 			next = Operator__GetSample( Channel__Op(self, 2), next );
-			sample = Operator__GetSample( Channel__Op(self, 3), next );
+			sample = (Bit32s)Operator__GetSample( Channel__Op(self, 3), next );
 		} else if ( mode == sm3AMFM ) {
 			Bits next; // haleyjd 09/09/10: GNUisms out!
 			sample = out0;
@@ -1008,7 +1008,7 @@ Channel* Channel__BlockTemplate(Channel *self, Chip* chip,
 			sample += Operator__GetSample( Channel__Op(self, 3), next );
 		} else if ( mode == sm3FMAM ) {
 			Bits next; // haleyjd 09/09/10: GNUisms out!
-			sample = Operator__GetSample( Channel__Op(self, 1), out0 );
+			sample = (Bit32s)Operator__GetSample( Channel__Op(self, 1), out0 );
 			next = Operator__GetSample( Channel__Op(self, 2), 0 );
 			sample += Operator__GetSample( Channel__Op(self, 3), next );
 		} else if ( mode == sm3AMAM ) {
@@ -1279,7 +1279,7 @@ void Chip__GenerateBlock2(Chip *self, Bitu total, Bit32s* output ) {
                 Channel *ch;
 		int count;
 
-		Bit32u samples = Chip__ForwardLFO( self, total );
+		Bit32u samples = Chip__ForwardLFO( self, (Bit32u)total );
 		memset(output, 0, sizeof(Bit32s) * samples);
 		count = 0;
 		for ( ch = self->chan; ch < self->chan + 9; ) {
@@ -1296,7 +1296,7 @@ void Chip__GenerateBlock3(Chip *self, Bitu total, Bit32s* output  ) {
                 int count;
                 Channel *ch;
 
-		Bit32u samples = Chip__ForwardLFO( self, total );
+		Bit32u samples = Chip__ForwardLFO( self, (Bit32u)total );
 		memset(output, 0, sizeof(Bit32s) * samples *2);
 		count = 0;
 		for ( ch = self->chan; ch < self->chan + 18; ) {
@@ -1380,7 +1380,7 @@ void Chip__Setup(Chip *self, Bit32u rate ) {
 
 			}
 			diff = original - samples;
-			lDiff = labs( diff );
+			lDiff = (Bit32u)labs( diff );
 			//Init last on first pass
 			if ( lDiff < bestDiff ) {
 				bestDiff = lDiff;

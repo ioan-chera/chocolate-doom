@@ -47,7 +47,7 @@ static void PlayerQuitGame(player_t *player)
     static char exitmsg[80];
     unsigned int player_num;
 
-    player_num = player - players;
+    player_num = (unsigned)(player - players);
 
     // Do this the same way as Vanilla Doom does, to allow dehacked
     // replacements of this message

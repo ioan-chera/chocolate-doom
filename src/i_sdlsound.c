@@ -228,7 +228,7 @@ static Mix_Chunk *AllocateSound(sfxinfo_t *sfxinfo, size_t len)
     // Skip past the chunk structure for the audio buffer
 
     snd->chunk.abuf = (byte *) (snd + 1);
-    snd->chunk.alen = len;
+    snd->chunk.alen = (Uint32)len;
     snd->chunk.allocated = 1;
     snd->chunk.volume = MIX_MAX_VOLUME;
 
@@ -372,7 +372,7 @@ static boolean ExpandSoundData_SRC(sfxinfo_t *sfxinfo,
 
     // Allocate the new chunk.
 
-    alen = src_data.output_frames_gen * 4;
+    alen = (uint32_t)(src_data.output_frames_gen * 4);
 
     chunk = AllocateSound(sfxinfo, src_data.output_frames_gen * 4);
 
@@ -582,7 +582,7 @@ static boolean ExpandSoundData_SDL(sfxinfo_t *sfxinfo,
 
         // number of samples in the converted sound
 
-        expanded_length = ((uint64_t) length * mixer_freq) / samplerate;
+        expanded_length = (int)(((uint64_t) length * mixer_freq) / samplerate);
         expand_ratio = (length << 8) / expanded_length;
 
         for (i=0; i<expanded_length; ++i)

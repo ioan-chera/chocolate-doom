@@ -52,7 +52,7 @@ static unsigned int IntWidth(int val)
 
     TXT_snprintf(buf, sizeof(buf), "%i", val);
 
-    return strlen(buf);
+    return (unsigned)strlen(buf);
 }
 
 static unsigned int FloatWidth(float val, float step)
@@ -172,7 +172,7 @@ static void TXT_SpinControlDrawer(TXT_UNCAST_ARG(spincontrol))
 
     i = 0;
 
-    padding = spincontrol->widget.w - strlen(spincontrol->buffer) - 4;
+    padding = (unsigned)(spincontrol->widget.w - strlen(spincontrol->buffer) - 4);
 
     while (i < padding)
     {
@@ -263,7 +263,7 @@ static int TXT_SpinControlKeyPress(TXT_UNCAST_ARG(spincontrol), int key)
 
     if (spincontrol->editing)
     {
-        if (key == KEY_ENTER)
+        if (key == DOOM_KEY_ENTER)
         {
             FinishEditing(spincontrol);
             return 1;
@@ -282,7 +282,7 @@ static int TXT_SpinControlKeyPress(TXT_UNCAST_ARG(spincontrol), int key)
             return 1;
         }
 
-        if (key == KEY_BACKSPACE)
+        if (key == DOOM_KEY_BACKSPACE)
         {
             Backspace(spincontrol);
             return 1;
@@ -292,7 +292,7 @@ static int TXT_SpinControlKeyPress(TXT_UNCAST_ARG(spincontrol), int key)
     {
         // Non-editing mode
 
-        if (key == KEY_ENTER)
+        if (key == DOOM_KEY_ENTER)
         {
             spincontrol->editing = 1;
             TXT_StringCopy(spincontrol->buffer, "", spincontrol->buffer_len);

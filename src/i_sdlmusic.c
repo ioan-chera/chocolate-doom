@@ -1112,7 +1112,7 @@ static boolean ConvertMus(byte *musdata, int len, char *filename)
     {
         mem_get_buf(outstream, &outbuf, &outbuf_len);
 
-        M_WriteFile(filename, outbuf, outbuf_len);
+        M_WriteFile(filename, outbuf, (int)outbuf_len);
     }
 
     mem_fclose(instream);

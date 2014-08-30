@@ -29,7 +29,7 @@
 #define KEY_UPARROW	0xad
 #define KEY_DOWNARROW	0xaf
 #define KEY_ESCAPE	27
-#define KEY_ENTER	13
+#define DOOM_KEY_ENTER	13
 #define KEY_TAB		9
 #define KEY_F1		(0x80+0x3b)
 #define KEY_F2		(0x80+0x3c)
@@ -44,7 +44,7 @@
 #define KEY_F11		(0x80+0x57)
 #define KEY_F12		(0x80+0x58)
 
-#define KEY_BACKSPACE	0x7f
+#define DOOM_KEY_BACKSPACE	0x7f
 #define KEY_PAUSE	0xff
 
 #define KEY_EQUALS	0x3d
@@ -63,7 +63,7 @@
 #define KEY_SCRLCK      (0x80+0x46)
 #define KEY_PRTSCR      (0x80+0x59)
 
-#define KEY_HOME        (0x80+0x47)
+#define DOOM_KEY_HOME        (0x80+0x47)
 #define KEY_END         (0x80+0x4f)
 #define KEY_PGUP        (0x80+0x49)
 #define KEY_PGDN        (0x80+0x51)
@@ -77,7 +77,7 @@
 #define KEYP_4          KEY_LEFTARROW
 #define KEYP_5          '5'
 #define KEYP_6          KEY_RIGHTARROW
-#define KEYP_7          KEY_HOME
+#define KEYP_7          DOOM_KEY_HOME
 #define KEYP_8          KEY_UPARROW
 #define KEYP_9          KEY_PGUP
 
@@ -87,7 +87,7 @@
 #define KEYP_MULTIPLY   '*'
 #define KEYP_PERIOD     0
 #define KEYP_EQUALS     KEY_EQUALS
-#define KEYP_ENTER      KEY_ENTER
+#define KEYP_ENTER      DOOM_KEY_ENTER
 
 #endif          // __DOOMKEYS__
 

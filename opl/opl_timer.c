@@ -146,7 +146,7 @@ static int ThreadFunction(void *unused)
 
         if (next_time > now)
         {
-            SDL_Delay((next_time - now) / OPL_MS);
+            SDL_Delay((Uint32)((next_time - now) / OPL_MS));
         }
 
         // Update the current time.

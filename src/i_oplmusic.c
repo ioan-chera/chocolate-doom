@@ -1185,7 +1185,7 @@ static void ScheduleTrack(opl_track_data_t *track)
     // Set a timer to be invoked when the next event is
     // ready to play.
 
-    OPL_SetCallback(us, TrackTimerCallback, track);
+    OPL_SetCallback((unsigned)us, TrackTimerCallback, track);
 }
 
 // Initialize a channel.
@@ -1368,7 +1368,7 @@ static boolean ConvertMus(byte *musdata, int len, char *filename)
     {
         mem_get_buf(outstream, &outbuf, &outbuf_len);
 
-        M_WriteFile(filename, outbuf, outbuf_len);
+        M_WriteFile(filename, outbuf, (int)outbuf_len);
     }
 
     mem_fclose(instream);
@@ -1562,7 +1562,7 @@ void I_OPL_DevMessages(char *result, size_t result_len)
             continue;
         }
 
-        instr_num = tracks[0].channels[i].instrument - main_instrs;
+        instr_num = (int)(tracks[0].channels[i].instrument - main_instrs);
 
         M_snprintf(tmp, sizeof(tmp),
                    "chan %i: %c i#%i (%s)\n",

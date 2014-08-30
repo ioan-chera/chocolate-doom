@@ -27,7 +27,7 @@ static void TXT_ButtonSizeCalc(TXT_UNCAST_ARG(button))
 {
     TXT_CAST_ARG(txt_button_t, button);
 
-    button->widget.w = strlen(button->label);
+    button->widget.w = (unsigned)strlen(button->label);
     button->widget.h = 1;
 }
 
@@ -43,7 +43,7 @@ static void TXT_ButtonDrawer(TXT_UNCAST_ARG(button))
 
     TXT_DrawString(button->label);
 
-    for (i=strlen(button->label); i < w; ++i)
+    for (i=(unsigned)strlen(button->label); i < w; ++i)
     {
         TXT_DrawString(" ");
     }
@@ -60,7 +60,7 @@ static int TXT_ButtonKeyPress(TXT_UNCAST_ARG(button), int key)
 {
     TXT_CAST_ARG(txt_button_t, button);
 
-    if (key == KEY_ENTER)
+    if (key == DOOM_KEY_ENTER)
     {
         TXT_EmitSignal(button, "pressed");
         return 1;
@@ -77,7 +77,7 @@ static void TXT_ButtonMousePress(TXT_UNCAST_ARG(button), int x, int y, int b)
     {
         // Equivalent to pressing enter
 
-        TXT_ButtonKeyPress(button, KEY_ENTER);
+        TXT_ButtonKeyPress(button, DOOM_KEY_ENTER);
     }
 }
 

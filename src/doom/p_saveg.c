@@ -490,7 +490,7 @@ static void saveg_write_mobj_t(mobj_t *str)
     saveg_write32(str->tics);
 
     // state_t* state;
-    saveg_write32(str->state - states);
+    saveg_write32((int)(str->state - states));
 
     // int flags;
     saveg_write32(str->flags);
@@ -516,7 +516,7 @@ static void saveg_write_mobj_t(mobj_t *str)
     // struct player_s* player;
     if (str->player)
     {
-        saveg_write32(str->player - players + 1);
+        saveg_write32((int)(str->player - players + 1));
     }
     else
     {
@@ -617,7 +617,7 @@ static void saveg_write_pspdef_t(pspdef_t *str)
     // state_t* state;
     if (str->state)
     {
-        saveg_write32(str->state - states);
+        saveg_write32((int)(str->state - states));
     }
     else
     {
@@ -950,7 +950,7 @@ static void saveg_write_ceiling_t(ceiling_t *str)
     saveg_write_enum(str->type);
 
     // sector_t* sector;
-    saveg_write32(str->sector - sectors);
+    saveg_write32((int)(str->sector - sectors));
 
     // fixed_t bottomheight;
     saveg_write32(str->bottomheight);
@@ -1017,7 +1017,7 @@ static void saveg_write_vldoor_t(vldoor_t *str)
     saveg_write_enum(str->type);
 
     // sector_t* sector;
-    saveg_write32(str->sector - sectors);
+    saveg_write32((int)(str->sector - sectors));
 
     // fixed_t topheight;
     saveg_write32(str->topheight);
@@ -1084,7 +1084,7 @@ static void saveg_write_floormove_t(floormove_t *str)
     saveg_write32(str->crush);
 
     // sector_t* sector;
-    saveg_write32(str->sector - sectors);
+    saveg_write32((int)(str->sector - sectors));
 
     // int direction;
     saveg_write32(str->direction);
@@ -1154,7 +1154,7 @@ static void saveg_write_plat_t(plat_t *str)
     saveg_write_thinker_t(&str->thinker);
 
     // sector_t* sector;
-    saveg_write32(str->sector - sectors);
+    saveg_write32((int)(str->sector - sectors));
 
     // fixed_t speed;
     saveg_write32(str->speed);
@@ -1224,7 +1224,7 @@ static void saveg_write_lightflash_t(lightflash_t *str)
     saveg_write_thinker_t(&str->thinker);
 
     // sector_t* sector;
-    saveg_write32(str->sector - sectors);
+    saveg_write32((int)(str->sector - sectors));
 
     // int count;
     saveg_write32(str->count);
@@ -1279,7 +1279,7 @@ static void saveg_write_strobe_t(strobe_t *str)
     saveg_write_thinker_t(&str->thinker);
 
     // sector_t* sector;
-    saveg_write32(str->sector - sectors);
+    saveg_write32((int)(str->sector - sectors));
 
     // int count;
     saveg_write32(str->count);
@@ -1328,7 +1328,7 @@ static void saveg_write_glow_t(glow_t *str)
     saveg_write_thinker_t(&str->thinker);
 
     // sector_t* sector;
-    saveg_write32(str->sector - sectors);
+    saveg_write32((int)(str->sector - sectors));
 
     // int minlight;
     saveg_write32(str->minlight);

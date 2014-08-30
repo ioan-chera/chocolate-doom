@@ -697,7 +697,7 @@ void WritePCXfile(char *filename, byte *data,
 	*pack++ = *palette++;
     
     // write output file
-    length = pack - (byte *)pcx;
+    length = (int)(pack - (byte *)pcx);
     M_WriteFile (filename, pcx, length);
 
     Z_Free (pcx);

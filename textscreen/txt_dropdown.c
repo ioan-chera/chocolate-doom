@@ -196,7 +196,7 @@ static int DropdownListWidth(txt_dropdown_list_t *list)
 
     for (i=0; i<list->num_values; ++i)
     {
-        int w = strlen(list->values[i]);
+        int w = (int)strlen(list->values[i]);
         if (w > result) 
         {
             result = w;
@@ -240,7 +240,7 @@ static void TXT_DropdownListDrawer(TXT_UNCAST_ARG(list))
 
     TXT_DrawString(str);
 
-    for (i=strlen(str); i<list->widget.w; ++i) 
+    for (i=(unsigned)strlen(str); i<list->widget.w; ++i)
     {
         TXT_DrawString(" ");
     }
@@ -254,7 +254,7 @@ static int TXT_DropdownListKeyPress(TXT_UNCAST_ARG(list), int key)
 {
     TXT_CAST_ARG(txt_dropdown_list_t, list);
 
-    if (key == KEY_ENTER)
+    if (key == DOOM_KEY_ENTER)
     {
         OpenSelectorWindow(list);
         return 1;
@@ -272,7 +272,7 @@ static void TXT_DropdownListMousePress(TXT_UNCAST_ARG(list),
 
     if (b == TXT_MOUSE_LEFT)
     {
-        TXT_DropdownListKeyPress(list, KEY_ENTER);
+        TXT_DropdownListKeyPress(list, DOOM_KEY_ENTER);
     }
 }
 

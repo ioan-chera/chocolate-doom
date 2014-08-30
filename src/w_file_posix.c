@@ -70,7 +70,7 @@ static void MapFile(posix_wad_file_t *wad, char *filename)
 
 unsigned int GetFileLength(int handle)
 {
-    return lseek(handle, 0, SEEK_END);
+    return (unsigned)lseek(handle, 0, SEEK_END);
 }
    
 static wad_file_t *W_POSIX_OpenFile(char *path)
@@ -136,7 +136,7 @@ size_t W_POSIX_Read(wad_file_t *wad, unsigned int offset,
     byte_buffer = buffer;
 
     while (buffer_len > 0) {
-        result = read(posix_wad->handle, byte_buffer, buffer_len);
+        result = (int)read(posix_wad->handle, byte_buffer, buffer_len);
 
         if (result < 0) {
             perror("W_POSIX_Read");

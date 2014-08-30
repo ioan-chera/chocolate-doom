@@ -96,7 +96,7 @@ static void LoadResponseFile(int argv_index)
 
     printf("Found response file %s!\n", response_filename);
 
-    size = M_FileLength(handle);
+    size = (int)M_FileLength(handle);
 
     // Read in the entire file
     // Allocate one byte extra - this is in case there is an argument
@@ -109,7 +109,7 @@ static void LoadResponseFile(int argv_index)
 
     while (i < size)
     {
-        k = fread(file + i, 1, size - i, handle);
+        k = (int)fread(file + i, 1, size - i, handle);
 
         if (k < 0)
         {
