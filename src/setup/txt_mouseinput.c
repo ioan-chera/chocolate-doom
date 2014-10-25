@@ -122,7 +122,7 @@ static int TXT_MouseInputKeyPress(TXT_UNCAST_ARG(mouse_input), int key)
 {
     TXT_CAST_ARG(txt_mouse_input_t, mouse_input);
 
-    if (key == KEY_ENTER)
+    if (key == DOOM_KEY_ENTER)
     {
         // Open a window to prompt for the new mouse press
 
@@ -131,7 +131,7 @@ static int TXT_MouseInputKeyPress(TXT_UNCAST_ARG(mouse_input), int key)
         return 1;
     }
 
-    if (key == KEY_BACKSPACE || key == KEY_DEL)
+    if (key == DOOM_KEY_BACKSPACE || key == KEY_DEL)
     {
         *mouse_input->variable = -1;
     }
@@ -147,7 +147,7 @@ static void TXT_MouseInputMousePress(TXT_UNCAST_ARG(widget), int x, int y, int b
 
     if (b == TXT_MOUSE_LEFT)
     {
-        TXT_MouseInputKeyPress(widget, KEY_ENTER);
+        TXT_MouseInputKeyPress(widget, DOOM_KEY_ENTER);
     }
 }
 

@@ -1839,7 +1839,7 @@ boolean M_Responder (event_t* ev)
     {
         switch(key)
         {
-        case KEY_BACKSPACE:
+        case DOOM_KEY_BACKSPACE:
             if (saveCharIndex > 0)
             {
                 saveCharIndex--;
@@ -1853,7 +1853,7 @@ boolean M_Responder (event_t* ev)
                          sizeof(savegamestrings[quickSaveSlot]));
             break;
 
-        case KEY_ENTER:
+        case DOOM_KEY_ENTER:
             // [STRIFE]
             saveStringEnter = 0;
             if(gameversion == exe_strife_1_31 && !namingCharacter)

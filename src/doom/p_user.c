@@ -28,7 +28,7 @@
 
 #include "doomstat.h"
 
-
+#include "../ioan/DemoTrace.h"
 
 // Index of the special effects (INVUL inverse) map.
 #define INVERSECOLORMAP		32
@@ -374,6 +374,9 @@ void P_PlayerThink (player_t* player)
     }
     else
 	player->fixedcolormap = 0;
+    
+    // IOANCH: log stuff
+    DT_AppendPlayerPos(player, !!(player->cmd.buttons & BT_ATTACK));
 }
 
 

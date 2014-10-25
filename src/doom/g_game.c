@@ -71,7 +71,7 @@
 
 
 #include "g_game.h"
-
+#include "../ioan/SVG.h"
 
 #define SAVEGAMESIZE	0x2c000
 
@@ -1303,7 +1303,8 @@ extern char*	pagename;
 void G_ExitLevel (void) 
 { 
     secretexit = false; 
-    gameaction = ga_completed; 
+    gameaction = ga_completed;
+    SVG_WriteLevel();
 } 
 
 // Here's for the german edition.

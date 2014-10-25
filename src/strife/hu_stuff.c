@@ -442,7 +442,7 @@ void HU_Ticker(void)
                 else
                 {
                     rc = HUlib_keyInIText(&w_inputbuffer[i], c);
-                    if (rc && c == KEY_ENTER)
+                    if (rc && c == DOOM_KEY_ENTER)
                     {
                         if (w_inputbuffer[i].l.len
                             && (chat_dest[i] == consoleplayer+1
@@ -583,12 +583,12 @@ boolean HU_Responder(event_t *ev)
             macromessage = chat_macros[c];
 
             // kill last message with a '\n'
-            HU_queueChatChar(KEY_ENTER); // DEBUG!!!
+            HU_queueChatChar(DOOM_KEY_ENTER); // DEBUG!!!
 
             // send the macro message
             while (*macromessage)
                 HU_queueChatChar(*macromessage++);
-            HU_queueChatChar(KEY_ENTER);
+            HU_queueChatChar(DOOM_KEY_ENTER);
 
             // leave chat mode and notify that it was sent
             chat_on = false;
@@ -656,7 +656,7 @@ boolean HU_Responder(event_t *ev)
                 }
             }
 
-            if (c == KEY_ENTER)
+            if (c == DOOM_KEY_ENTER)
             {
                 chat_on = false;
                 if (w_chat.l.len)

@@ -437,9 +437,9 @@ HUlib_keyInIText
 
     if (ch >= ' ' && ch <= '_') 
         HUlib_addCharToTextLine(&it->l, (char) ch);
-    else if (ch == KEY_BACKSPACE) 
+    else if (ch == DOOM_KEY_BACKSPACE) 
         HUlib_delCharFromIText(it);
-    else if (ch != KEY_ENTER) 
+    else if (ch != DOOM_KEY_ENTER) 
         return false; // did not eat key
 
     return true; // ate the key

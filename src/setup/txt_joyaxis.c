@@ -471,13 +471,13 @@ static int TXT_JoystickAxisKeyPress(TXT_UNCAST_ARG(joystick_axis), int key)
 {
     TXT_CAST_ARG(txt_joystick_axis_t, joystick_axis);
 
-    if (key == KEY_ENTER)
+    if (key == DOOM_KEY_ENTER)
     {
         TXT_ConfigureJoystickAxis(joystick_axis, -1, NULL);
         return 1;
     }
 
-    if (key == KEY_BACKSPACE || key == KEY_DEL)
+    if (key == DOOM_KEY_BACKSPACE || key == KEY_DEL)
     {
         *joystick_axis->axis = -1;
     }
@@ -494,7 +494,7 @@ static void TXT_JoystickAxisMousePress(TXT_UNCAST_ARG(widget),
 
     if (b == TXT_MOUSE_LEFT)
     {
-        TXT_JoystickAxisKeyPress(widget, KEY_ENTER);
+        TXT_JoystickAxisKeyPress(widget, DOOM_KEY_ENTER);
     }
 }
 

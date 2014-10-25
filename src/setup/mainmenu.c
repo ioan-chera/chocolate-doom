@@ -42,7 +42,7 @@ static const int cheat_sequence[] =
 {
     KEY_UPARROW, KEY_UPARROW, KEY_DOWNARROW, KEY_DOWNARROW,
     KEY_LEFTARROW, KEY_RIGHTARROW, KEY_LEFTARROW, KEY_RIGHTARROW,
-    'b', 'a', KEY_ENTER, 0
+    'b', 'a', DOOM_KEY_ENTER, 0
 };
 
 static unsigned int cheat_sequence_index = 0;
@@ -58,7 +58,7 @@ static void SensibleDefaults(void)
     key_jump = '/';
     key_lookup = KEY_PGUP;
     key_lookdown = KEY_PGDN;
-    key_lookcenter = KEY_HOME;
+    key_lookcenter = DOOM_KEY_HOME;
     key_flyup = KEY_INS;
     key_flydown = KEY_DEL;
     key_flycenter = KEY_END;

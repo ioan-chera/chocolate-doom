@@ -56,7 +56,7 @@ void PwnBox(TXT_UNCAST_ARG(widget), void *user_data)
     window = TXT_NewWindow("Pwned!");
     TXT_AddWidget(window, TXT_NewLabel(" BOOM! HEADSHOT! "));
 
-    close_button = TXT_NewWindowAction(KEY_ENTER, "Close");
+    close_button = TXT_NewWindowAction(DOOM_KEY_ENTER, "Close");
     TXT_SignalConnect(close_button, "pressed", ClosePwnBox, window);
 
     TXT_SetWindowAction(window, TXT_HORIZ_LEFT, NULL);

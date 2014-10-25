@@ -204,20 +204,20 @@ boolean CT_Responder(event_t * ev)
                     ev->data1 = '9' + 1;
                 }
                 macro = chat_macros[ev->data1 - '1'];
-                CT_queueChatChar(KEY_ENTER);    //send old message
+                CT_queueChatChar(DOOM_KEY_ENTER);    //send old message
                 CT_queueChatChar(chat_dest[consoleplayer]);     // chose the dest.
                 while (*macro)
                 {
                     CT_queueChatChar(toupper(*macro++));
                 }
-                CT_queueChatChar(KEY_ENTER);    //send it off...
+                CT_queueChatChar(DOOM_KEY_ENTER);    //send it off...
                 CT_Stop();
                 return true;
             }
         }
-        if (ev->data1 == KEY_ENTER)
+        if (ev->data1 == DOOM_KEY_ENTER)
         {
-            CT_queueChatChar(KEY_ENTER);
+            CT_queueChatChar(DOOM_KEY_ENTER);
             CT_Stop();
             return true;
         }
@@ -227,9 +227,9 @@ boolean CT_Responder(event_t * ev)
             CT_Stop();
             return true;
         }
-        else if (ev->data1 == KEY_BACKSPACE)
+        else if (ev->data1 == DOOM_KEY_BACKSPACE)
         {
-            CT_queueChatChar(KEY_BACKSPACE);
+            CT_queueChatChar(DOOM_KEY_BACKSPACE);
             return true;
         }
         else if (ValidChatChar(ev->data2))
@@ -271,7 +271,7 @@ void CT_Ticker(void)
             {
                 CT_ClearChatMessage(i);
             }
-            else if (c == KEY_ENTER)
+            else if (c == DOOM_KEY_ENTER)
             {
                 numplayers = 0;
                 for (j = 0; j < MAXPLAYERS; j++)
@@ -317,7 +317,7 @@ void CT_Ticker(void)
                 }
                 CT_ClearChatMessage(i);
             }
-            else if (c == KEY_BACKSPACE)
+            else if (c == DOOM_KEY_BACKSPACE)
             {
                 CT_BackSpace(i);
             }

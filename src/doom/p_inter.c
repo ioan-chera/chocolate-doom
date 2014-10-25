@@ -43,7 +43,7 @@
 #define BONUSADD	6
 
 
-
+#include "../ioan/DemoTrace.h"
 
 // a weapon is found with two clip loads,
 // a big item has five clip loads
@@ -647,7 +647,10 @@ P_TouchSpecialThing
       default:
 	I_Error ("P_SpecialThing: Unknown gettable thing");
     }
-	
+
+    // IOANCH
+    DT_AppendItemPos(special);
+    
     if (special->flags & MF_COUNTITEM)
 	player->itemcount++;
     P_RemoveMobj (special);

@@ -279,7 +279,7 @@ static int TXT_JoystickInputKeyPress(TXT_UNCAST_ARG(joystick_input), int key)
 {
     TXT_CAST_ARG(txt_joystick_input_t, joystick_input);
 
-    if (key == KEY_ENTER)
+    if (key == DOOM_KEY_ENTER)
     {
         // Open a window to prompt for the new joystick press
 
@@ -288,7 +288,7 @@ static int TXT_JoystickInputKeyPress(TXT_UNCAST_ARG(joystick_input), int key)
         return 1;
     }
 
-    if (key == KEY_BACKSPACE || key == KEY_DEL)
+    if (key == DOOM_KEY_BACKSPACE || key == KEY_DEL)
     {
         *joystick_input->variable = -1;
     }
@@ -304,7 +304,7 @@ static void TXT_JoystickInputMousePress(TXT_UNCAST_ARG(widget), int x, int y, in
 
     if (b == TXT_MOUSE_LEFT)
     {
-        TXT_JoystickInputKeyPress(widget, KEY_ENTER);
+        TXT_JoystickInputKeyPress(widget, DOOM_KEY_ENTER);
     }
 }
 

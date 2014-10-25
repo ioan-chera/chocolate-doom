@@ -71,6 +71,9 @@
 		4F86E65119AEFD70004A4834 /* w_merge.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F86E61119AEFD70004A4834 /* w_merge.c */; };
 		4F86E65219AEFD70004A4834 /* w_wad.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F86E61319AEFD70004A4834 /* w_wad.c */; };
 		4F86E65419AEFD70004A4834 /* z_zone.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F86E61619AEFD70004A4834 /* z_zone.c */; };
+		4FC575EC19DAE55600D306BB /* ArrayList.c in Sources */ = {isa = PBXBuildFile; fileRef = 4FC575EB19DAE55600D306BB /* ArrayList.c */; };
+		4FC575EF19DAE7B600D306BB /* DemoTrace.c in Sources */ = {isa = PBXBuildFile; fileRef = 4FC575ED19DAE7B600D306BB /* DemoTrace.c */; };
+		4FC575F219DAED0500D306BB /* SVG.c in Sources */ = {isa = PBXBuildFile; fileRef = 4FC575F019DAED0500D306BB /* SVG.c */; };
 		4FD56F5B19AF018E00B1560C /* pcsound_bsd.c in Sources */ = {isa = PBXBuildFile; fileRef = 4FD56F5419AF018E00B1560C /* pcsound_bsd.c */; };
 		4FD56F5C19AF018E00B1560C /* pcsound_linux.c in Sources */ = {isa = PBXBuildFile; fileRef = 4FD56F5619AF018E00B1560C /* pcsound_linux.c */; };
 		4FD56F5D19AF018E00B1560C /* pcsound_sdl.c in Sources */ = {isa = PBXBuildFile; fileRef = 4FD56F5719AF018E00B1560C /* pcsound_sdl.c */; };
@@ -300,6 +303,12 @@
 		4F86E61619AEFD70004A4834 /* z_zone.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = z_zone.c; path = src/z_zone.c; sourceTree = SOURCE_ROOT; };
 		4F86E61719AEFD70004A4834 /* z_zone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = z_zone.h; path = src/z_zone.h; sourceTree = SOURCE_ROOT; };
 		4F86E65519AEFDBD004A4834 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = SOURCE_ROOT; };
+		4FC575EA19DAE53300D306BB /* ArrayList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ArrayList.h; path = src/ioan/ArrayList.h; sourceTree = SOURCE_ROOT; };
+		4FC575EB19DAE55600D306BB /* ArrayList.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ArrayList.c; path = src/ioan/ArrayList.c; sourceTree = SOURCE_ROOT; };
+		4FC575ED19DAE7B600D306BB /* DemoTrace.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = DemoTrace.c; path = src/ioan/DemoTrace.c; sourceTree = SOURCE_ROOT; };
+		4FC575EE19DAE7B600D306BB /* DemoTrace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DemoTrace.h; path = src/ioan/DemoTrace.h; sourceTree = SOURCE_ROOT; };
+		4FC575F019DAED0500D306BB /* SVG.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = SVG.c; path = src/ioan/SVG.c; sourceTree = SOURCE_ROOT; };
+		4FC575F119DAED0500D306BB /* SVG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVG.h; path = src/ioan/SVG.h; sourceTree = SOURCE_ROOT; };
 		4FD56F5419AF018E00B1560C /* pcsound_bsd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pcsound_bsd.c; path = pcsound/pcsound_bsd.c; sourceTree = SOURCE_ROOT; };
 		4FD56F5519AF018E00B1560C /* pcsound_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pcsound_internal.h; path = pcsound/pcsound_internal.h; sourceTree = SOURCE_ROOT; };
 		4FD56F5619AF018E00B1560C /* pcsound_linux.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pcsound_linux.c; path = pcsound/pcsound_linux.c; sourceTree = SOURCE_ROOT; };
@@ -526,6 +535,7 @@
 		4F86E5A119AEFCE2004A4834 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				4FC575E919DAE51100D306BB /* ioan */,
 				4FD56FBC19B1F45F00B1560C /* doom */,
 				4F86E5A219AEFD70004A4834 /* aes_prng.c */,
 				4F86E5A319AEFD70004A4834 /* aes_prng.h */,
@@ -646,6 +656,19 @@
 			name = src;
 			sourceTree = "<group>";
 		};
+		4FC575E919DAE51100D306BB /* ioan */ = {
+			isa = PBXGroup;
+			children = (
+				4FC575EB19DAE55600D306BB /* ArrayList.c */,
+				4FC575EA19DAE53300D306BB /* ArrayList.h */,
+				4FC575ED19DAE7B600D306BB /* DemoTrace.c */,
+				4FC575EE19DAE7B600D306BB /* DemoTrace.h */,
+				4FC575F019DAED0500D306BB /* SVG.c */,
+				4FC575F119DAED0500D306BB /* SVG.h */,
+			);
+			name = ioan;
+			sourceTree = "<group>";
+		};
 		4FD56F5319AF017200B1560C /* pcsound */ = {
 			isa = PBXGroup;
 			children = (
@@ -747,108 +770,108 @@
 		4FD56FBC19B1F45F00B1560C /* doom */ = {
 			isa = PBXGroup;
 			children = (
+				4FD56FEA19B1F48500B1560C /* am_map.c */,
 				4FD56FBD19B1F48500B1560C /* am_map.h */,
 				4FD56FBE19B1F48500B1560C /* d_englsh.h */,
+				4FD56FEB19B1F48500B1560C /* d_items.c */,
 				4FD56FBF19B1F48500B1560C /* d_items.h */,
+				4FD56FEC19B1F48500B1560C /* d_main.c */,
 				4FD56FC019B1F48500B1560C /* d_main.h */,
+				4FD56FED19B1F48500B1560C /* d_net.c */,
 				4FD56FC119B1F48500B1560C /* d_player.h */,
 				4FD56FC219B1F48500B1560C /* d_textur.h */,
 				4FD56FC319B1F48500B1560C /* d_think.h */,
-				4FD56FC419B1F48500B1560C /* deh_misc.h */,
-				4FD56FC519B1F48500B1560C /* doomdata.h */,
-				4FD56FC619B1F48500B1560C /* doomdef.h */,
-				4FD56FC719B1F48500B1560C /* doomstat.h */,
-				4FD56FC819B1F48500B1560C /* dstrings.h */,
-				4FD56FC919B1F48500B1560C /* f_finale.h */,
-				4FD56FCA19B1F48500B1560C /* f_wipe.h */,
-				4FD56FCB19B1F48500B1560C /* g_game.h */,
-				4FD56FCC19B1F48500B1560C /* hu_lib.h */,
-				4FD56FCD19B1F48500B1560C /* hu_stuff.h */,
-				4FD56FCE19B1F48500B1560C /* info.h */,
-				4FD56FCF19B1F48500B1560C /* m_menu.h */,
-				4FD56FD019B1F48500B1560C /* m_random.h */,
-				4FD56FD119B1F48500B1560C /* p_inter.h */,
-				4FD56FD219B1F48500B1560C /* p_local.h */,
-				4FD56FD319B1F48500B1560C /* p_mobj.h */,
-				4FD56FD419B1F48500B1560C /* p_pspr.h */,
-				4FD56FD519B1F48500B1560C /* p_saveg.h */,
-				4FD56FD619B1F48500B1560C /* p_setup.h */,
-				4FD56FD719B1F48500B1560C /* p_spec.h */,
-				4FD56FD819B1F48500B1560C /* p_tick.h */,
-				4FD56FD919B1F48500B1560C /* r_bsp.h */,
-				4FD56FDA19B1F48500B1560C /* r_data.h */,
-				4FD56FDB19B1F48500B1560C /* r_defs.h */,
-				4FD56FDC19B1F48500B1560C /* r_draw.h */,
-				4FD56FDD19B1F48500B1560C /* r_local.h */,
-				4FD56FDE19B1F48500B1560C /* r_main.h */,
-				4FD56FDF19B1F48500B1560C /* r_plane.h */,
-				4FD56FE019B1F48500B1560C /* r_segs.h */,
-				4FD56FE119B1F48500B1560C /* r_sky.h */,
-				4FD56FE219B1F48500B1560C /* r_state.h */,
-				4FD56FE319B1F48500B1560C /* r_things.h */,
-				4FD56FE419B1F48500B1560C /* s_sound.h */,
-				4FD56FE519B1F48500B1560C /* sounds.h */,
-				4FD56FE619B1F48500B1560C /* st_lib.h */,
-				4FD56FE719B1F48500B1560C /* st_stuff.h */,
-				4FD56FE819B1F48500B1560C /* statdump.h */,
-				4FD56FE919B1F48500B1560C /* wi_stuff.h */,
-				4FD56FEA19B1F48500B1560C /* am_map.c */,
-				4FD56FEB19B1F48500B1560C /* d_items.c */,
-				4FD56FEC19B1F48500B1560C /* d_main.c */,
-				4FD56FED19B1F48500B1560C /* d_net.c */,
 				4FD56FEE19B1F48500B1560C /* deh_ammo.c */,
 				4FD56FEF19B1F48500B1560C /* deh_cheat.c */,
 				4FD56FF019B1F48500B1560C /* deh_doom.c */,
 				4FD56FF119B1F48500B1560C /* deh_frame.c */,
 				4FD56FF219B1F48500B1560C /* deh_misc.c */,
+				4FD56FC419B1F48500B1560C /* deh_misc.h */,
 				4FD56FF319B1F48500B1560C /* deh_ptr.c */,
 				4FD56FF419B1F48500B1560C /* deh_sound.c */,
 				4FD56FF519B1F48500B1560C /* deh_thing.c */,
 				4FD56FF619B1F48500B1560C /* deh_weapon.c */,
+				4FD56FC519B1F48500B1560C /* doomdata.h */,
 				4FD56FF719B1F48500B1560C /* doomdef.c */,
+				4FD56FC619B1F48500B1560C /* doomdef.h */,
 				4FD56FF819B1F48500B1560C /* doomstat.c */,
+				4FD56FC719B1F48500B1560C /* doomstat.h */,
 				4FD56FF919B1F48500B1560C /* dstrings.c */,
+				4FD56FC819B1F48500B1560C /* dstrings.h */,
 				4FD56FFA19B1F48500B1560C /* f_finale.c */,
+				4FD56FC919B1F48500B1560C /* f_finale.h */,
 				4FD56FFB19B1F48500B1560C /* f_wipe.c */,
+				4FD56FCA19B1F48500B1560C /* f_wipe.h */,
 				4FD56FFC19B1F48500B1560C /* g_game.c */,
+				4FD56FCB19B1F48500B1560C /* g_game.h */,
 				4FD56FFD19B1F48500B1560C /* hu_lib.c */,
+				4FD56FCC19B1F48500B1560C /* hu_lib.h */,
 				4FD56FFE19B1F48500B1560C /* hu_stuff.c */,
+				4FD56FCD19B1F48500B1560C /* hu_stuff.h */,
 				4FD56FFF19B1F48500B1560C /* info.c */,
+				4FD56FCE19B1F48500B1560C /* info.h */,
 				4FD5700019B1F48500B1560C /* m_menu.c */,
+				4FD56FCF19B1F48500B1560C /* m_menu.h */,
 				4FD5700119B1F48500B1560C /* m_random.c */,
+				4FD56FD019B1F48500B1560C /* m_random.h */,
 				4FD5700219B1F48500B1560C /* p_ceilng.c */,
 				4FD5700319B1F48500B1560C /* p_doors.c */,
 				4FD5700419B1F48500B1560C /* p_enemy.c */,
 				4FD5700519B1F48600B1560C /* p_floor.c */,
 				4FD5700619B1F48600B1560C /* p_inter.c */,
+				4FD56FD119B1F48500B1560C /* p_inter.h */,
 				4FD5700719B1F48600B1560C /* p_lights.c */,
+				4FD56FD219B1F48500B1560C /* p_local.h */,
 				4FD5700819B1F48600B1560C /* p_map.c */,
 				4FD5700919B1F48600B1560C /* p_maputl.c */,
 				4FD5700A19B1F48600B1560C /* p_mobj.c */,
+				4FD56FD319B1F48500B1560C /* p_mobj.h */,
 				4FD5700B19B1F48600B1560C /* p_plats.c */,
 				4FD5700C19B1F48600B1560C /* p_pspr.c */,
+				4FD56FD419B1F48500B1560C /* p_pspr.h */,
 				4FD5700D19B1F48600B1560C /* p_saveg.c */,
+				4FD56FD519B1F48500B1560C /* p_saveg.h */,
 				4FD5700E19B1F48600B1560C /* p_setup.c */,
+				4FD56FD619B1F48500B1560C /* p_setup.h */,
 				4FD5700F19B1F48600B1560C /* p_sight.c */,
 				4FD5701019B1F48600B1560C /* p_spec.c */,
+				4FD56FD719B1F48500B1560C /* p_spec.h */,
 				4FD5701119B1F48600B1560C /* p_switch.c */,
 				4FD5701219B1F48600B1560C /* p_telept.c */,
 				4FD5701319B1F48600B1560C /* p_tick.c */,
+				4FD56FD819B1F48500B1560C /* p_tick.h */,
 				4FD5701419B1F48600B1560C /* p_user.c */,
 				4FD5701519B1F48600B1560C /* r_bsp.c */,
+				4FD56FD919B1F48500B1560C /* r_bsp.h */,
 				4FD5701619B1F48600B1560C /* r_data.c */,
+				4FD56FDA19B1F48500B1560C /* r_data.h */,
+				4FD56FDB19B1F48500B1560C /* r_defs.h */,
 				4FD5701719B1F48600B1560C /* r_draw.c */,
+				4FD56FDC19B1F48500B1560C /* r_draw.h */,
+				4FD56FDD19B1F48500B1560C /* r_local.h */,
 				4FD5701819B1F48600B1560C /* r_main.c */,
+				4FD56FDE19B1F48500B1560C /* r_main.h */,
 				4FD5701919B1F48600B1560C /* r_plane.c */,
+				4FD56FDF19B1F48500B1560C /* r_plane.h */,
 				4FD5701A19B1F48600B1560C /* r_segs.c */,
+				4FD56FE019B1F48500B1560C /* r_segs.h */,
 				4FD5701B19B1F48600B1560C /* r_sky.c */,
+				4FD56FE119B1F48500B1560C /* r_sky.h */,
+				4FD56FE219B1F48500B1560C /* r_state.h */,
 				4FD5701C19B1F48600B1560C /* r_things.c */,
+				4FD56FE319B1F48500B1560C /* r_things.h */,
 				4FD5701D19B1F48600B1560C /* s_sound.c */,
+				4FD56FE419B1F48500B1560C /* s_sound.h */,
 				4FD5701E19B1F48600B1560C /* sounds.c */,
+				4FD56FE519B1F48500B1560C /* sounds.h */,
 				4FD5701F19B1F48600B1560C /* st_lib.c */,
+				4FD56FE619B1F48500B1560C /* st_lib.h */,
 				4FD5702019B1F48600B1560C /* st_stuff.c */,
+				4FD56FE719B1F48500B1560C /* st_stuff.h */,
 				4FD5702119B1F48600B1560C /* statdump.c */,
+				4FD56FE819B1F48500B1560C /* statdump.h */,
 				4FD5702219B1F48600B1560C /* wi_stuff.c */,
+				4FD56FE919B1F48500B1560C /* wi_stuff.h */,
 			);
 			name = doom;
 			sourceTree = "<group>";
@@ -924,13 +947,16 @@
 				4FD56FB419AF020A00B1560C /* opl.c in Sources */,
 				4F86E62319AEFD70004A4834 /* gusconf.c in Sources */,
 				4FD5705419B1F48600B1560C /* r_sky.c in Sources */,
+				4FC575EF19DAE7B600D306BB /* DemoTrace.c in Sources */,
 				4F86E61B19AEFD70004A4834 /* d_iwad.c in Sources */,
 				4F86E62419AEFD70004A4834 /* i_cdmus.c in Sources */,
 				4FD5703119B1F48600B1560C /* doomstat.c in Sources */,
 				4FD5703919B1F48600B1560C /* m_menu.c in Sources */,
+				4FC575EC19DAE55600D306BB /* ArrayList.c in Sources */,
 				4F86E62C19AEFD70004A4834 /* i_sdlsound.c in Sources */,
 				4F86E64C19AEFD70004A4834 /* w_file_posix.c in Sources */,
 				4FD5704819B1F48600B1560C /* p_sight.c in Sources */,
+				4FC575F219DAED0500D306BB /* SVG.c in Sources */,
 				4F86E63419AEFD70004A4834 /* m_bbox.c in Sources */,
 				4FD56F8F19AF01DF00B1560C /* txt_checkbox.c in Sources */,
 				4FD5704419B1F48600B1560C /* p_plats.c in Sources */,

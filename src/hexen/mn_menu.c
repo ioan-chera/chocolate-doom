@@ -1627,7 +1627,7 @@ boolean MN_Responder(event_t * event)
     else
     {                           // Editing file names
         textBuffer = &SlotText[currentSlot][slotptr];
-        if (key == KEY_BACKSPACE)
+        if (key == DOOM_KEY_BACKSPACE)
         {
             if (slotptr)
             {
@@ -1645,7 +1645,7 @@ boolean MN_Responder(event_t * event)
             MN_DeactivateMenu();
             return (true);
         }
-        if (key == KEY_ENTER)
+        if (key == DOOM_KEY_ENTER)
         {
             SlotText[currentSlot][slotptr] = 0; // clear the cursor
             item = &CurrentMenu->items[CurrentItPos];
@@ -1660,7 +1660,7 @@ boolean MN_Responder(event_t * event)
             }
             return (true);
         }
-        if (slotptr < SLOTTEXTLEN && key != KEY_BACKSPACE)
+        if (slotptr < SLOTTEXTLEN && key != DOOM_KEY_BACKSPACE)
         {
             if (isalpha(charTyped))
             {
