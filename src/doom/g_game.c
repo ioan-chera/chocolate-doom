@@ -2217,7 +2217,7 @@ void G_TimeDemo (char* name)
     gameaction = ga_playdemo; 
 } 
  
-void G_TraceDemo(char* name)
+void G_HashDemo(char* name)
 {
     g_tracingDemo = true;
     G_TimeDemo(name);

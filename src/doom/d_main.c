@@ -1466,7 +1466,7 @@ void D_DoomMain (void)
         //
 	p = M_CheckParmWithArgs("-timedemo", 1);
 	if(!p)
-	    p = M_CheckParmWithArgs("-tracedemo", 1);
+	    p = M_CheckParmWithArgs("-hashdemo", 1);
     }
 
     if (p)
@@ -1811,10 +1811,10 @@ void D_DoomMain (void)
 	D_DoomLoop ();  // never returns
     }
     
-    p = M_CheckParmWithArgs("-tracedemo", 1);
+    p = M_CheckParmWithArgs("-hashdemo", 1);
     if (p)
     {
-	G_TraceDemo(demolumpname);
+	G_HashDemo(demolumpname);
 	D_DoomLoop();
     }
 	
