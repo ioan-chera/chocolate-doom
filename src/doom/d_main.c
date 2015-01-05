@@ -1465,7 +1465,8 @@ void D_DoomMain (void)
         // of the screen.
         //
 	p = M_CheckParmWithArgs("-timedemo", 1);
-
+	if(!p)
+	    p = M_CheckParmWithArgs("-tracedemo", 1);
     }
 
     if (p)
@@ -1808,6 +1809,13 @@ void D_DoomMain (void)
     {
 	G_TimeDemo (demolumpname);
 	D_DoomLoop ();  // never returns
+    }
+    
+    p = M_CheckParmWithArgs("-tracedemo", 1);
+    if (p)
+    {
+	G_TraceDemo(demolumpname);
+	D_DoomLoop();
     }
 	
     if (startloadgame >= 0)

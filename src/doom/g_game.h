@@ -55,6 +55,7 @@ void G_BeginRecording (void);
 
 void G_PlayDemo (char* name);
 void G_TimeDemo (char* name);
+void G_TraceDemo (char* name);
 boolean G_CheckDemoStatus (void);
 
 void G_ExitLevel (void);

@@ -72,6 +72,13 @@
 
 #include "g_game.h"
 
+#if defined(__APPLE__)
+#  define COMMON_DIGEST_FOR_OPENSSL
+#  include <CommonCrypto/CommonDigest.h>
+#  define SHA1 CC_SHA1
+#else
+#  include <openssl/md5.h>
+#endif
 
 #define SAVEGAMESIZE	0x2c000
 
@@ -143,7 +150,11 @@ boolean         precache = true;        // if true, load all graphics at start
 boolean         testcontrols = false;    // Invoked by setup to test controls
 int             testcontrols_mousespeed;
  
-
+// Demo tracing stuff
+boolean         g_tracingDemo;
+fixed_t        *g_demoTrace;
+int             g_demoTraceAlloc;
+int             g_demoTraceSize;
  
 wbstartstruct_t wminfo;               	// parms for world map / intermission 
  
@@ -819,7 +830,45 @@ boolean G_Responder (event_t* ev)
     return false; 
 } 
  
- 
+static char *str2md5(const char *str, int length) {
+    int n;
+    MD5_CTX c;
+    unsigned char digest[16];
+    char *out = (char*)malloc(33);
+
+    MD5_Init(&c);
+
+    while (length > 0) {
+        if (length > 512) {
+            MD5_Update(&c, str, 512);
+        } else {
+            MD5_Update(&c, str, length);
+        }
+        length -= 512;
+        str += 512;
+    }
+
+    MD5_Final(digest, &c);
+
+    for (n = 0; n < 16; ++n) {
+        snprintf(&(out[n*2]), 16*2, "%02x", (unsigned int)digest[n]);
+    }
+
+    return out;
+}
+
+static void WriteDemoCoordinates(const player_t* player)
+{
+    if(g_demoTraceSize == g_demoTraceAlloc)
+    {
+        g_demoTraceAlloc = !g_demoTraceAlloc ? 1024 : 2 * g_demoTraceAlloc;
+        g_demoTrace = realloc(g_demoTrace, g_demoTraceAlloc * sizeof(fixed_t));
+        if(!g_demoTrace)
+            I_Error("Failed reallocating demo trace list");
+    }
+    g_demoTrace[g_demoTraceSize++] = player->mo->x;
+    g_demoTrace[g_demoTraceSize++] = player->mo->y;
+}
  
 //
 // G_Ticker
@@ -888,7 +937,11 @@ void G_Ticker (void)
 	    memcpy(cmd, &netcmds[i], sizeof(ticcmd_t));
 
 	    if (demoplayback) 
+	    {
+		if(g_tracingDemo)
+		    WriteDemoCoordinates(&players[i]);
 		G_ReadDemoTiccmd (cmd); 
+	    }
 	    if (demorecording) 
 		G_WriteDemoTiccmd (cmd);
 	    
@@ -2164,6 +2217,11 @@ void G_TimeDemo (char* name)
     gameaction = ga_playdemo; 
 } 
  
+void G_TraceDemo(char* name)
+{
+    g_tracingDemo = true;
+    G_TimeDemo(name);
+}
  
 /* 
 =================== 
@@ -2178,9 +2236,16 @@ void G_TimeDemo (char* name)
 boolean G_CheckDemoStatus (void) 
 { 
     int             endtime; 
-	 
+    char           *md5 = NULL;
+ 
+    if(g_tracingDemo)
+    {
+	md5 = str2md5((char*)g_demoTrace, g_demoTraceSize * sizeof(*g_demoTrace));
+    }
+    
     if (timingdemo) 
     { 
+	// g_tracingDemo also implies timingdemo
         float fps;
         int realtics;
 
@@ -2191,9 +2256,16 @@ boolean G_CheckDemoStatus (void)
         // Prevent recursive calls
         timingdemo = false;
         demoplayback = false;
-
-	I_Error ("timed %i gametics in %i realtics (%f fps)",
+	if(g_tracingDemo && md5)
+	{
+	    I_Error ("timed %i gametics in %i realtics (%f fps);\ndemo hash %s",
+                 gametic, realtics, fps, md5);
+	}
+        else
+	{
+	    I_Error ("timed %i gametics in %i realtics (%f fps)",
                  gametic, realtics, fps);
+	}
     } 
 	 
     if (demoplayback) 
@@ -2226,6 +2298,7 @@ boolean G_CheckDemoStatus (void)
 	I_Error ("Demo %s recorded",demoname); 
     } 
 	 
+    free(md5);
     return false; 
 } 
  
