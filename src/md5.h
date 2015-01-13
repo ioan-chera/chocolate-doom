@@ -32,5 +32,6 @@ typedef struct md5_HashData
 void md5_initialize(md5_HashData* hash);
 void md5_digestData(md5_HashData* hash, const unsigned char* data, unsigned len);
 void md5_wrapUp(md5_HashData* hash);
+char* md5_digestToString(const md5_HashData* hash);
 
 #endif

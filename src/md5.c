@@ -17,6 +17,7 @@
 //      MD5 hashing, copied from GPLv2 version of Eternity (m_hash.cpp there)
 //
 
+#include <stdlib.h>
 #include "md5.h"
 
 #define leftrotate(w, b) (((w) << (b)) | ((w) >> (32 - (b))))
@@ -152,7 +153,7 @@ void md5_digestData(md5_HashData* hash, const unsigned char* data, unsigned len)
 	}
 }
 
-static void md5_wrapUp(md5_HashData* hash)
+void md5_wrapUp(md5_HashData* hash)
 {
 	int i;
 
@@ -185,4 +186,25 @@ static void md5_wrapUp(md5_HashData* hash)
 		hash->digest[i] = (((word << 8 ) | (word >> 24)) & 0x00ff00ff) |
 						  (((word << 24) | (word >> 8 )) & 0xff00ff00);
 	}
+}
+
+char* md5_digestToString(const md5_HashData* hash)
+{
+	char* buffer, *c;
+	unsigned size = 0;
+	static const int l_numdigest = 4;
+	int i;
+
+	size = (8 * l_numdigest + 1) * sizeof(char);
+	
+	c = buffer = calloc(1, size);
+	for(i = 0; i < l_numdigest; ++i)
+	{
+		int shift;
+		for(shift = 28; shift >= 0; shift -= 4)
+		{
+			*c++ = "0123456789abcdef"[(hash->digest[i] >> shift) & 0x0F];
+		}
+	}
+	return buffer;
 }
