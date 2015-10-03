@@ -886,6 +886,7 @@ static void teleportAndTakeShot(const player_t *player)
 
     mo = moArray[rand() % moCount];
     P_TeleportMove(player->mo, mo->x, mo->y);
+    player->mo->z = player->mo->floorz;
     player->mo->angle = rand();
 
     G_ScreenShot();
