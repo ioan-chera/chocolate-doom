@@ -20,6 +20,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
 
 #include "doomdef.h" 
 #include "doomkeys.h"
@@ -845,7 +846,53 @@ boolean G_Responder (event_t* ev)
     return false; 
 } 
  
- 
+static void teleportAndTakeShot(const player_t *player)
+{
+    const thinker_t *thinker;
+    const mobj_t *mo;
+
+    static const mobj_t *moArray[1000];
+    static boolean moInit;
+    static int moCount;
+    static int tryCount = 0;
+
+    if(!moInit)
+    {
+        srand((unsigned)time(NULL));
+        for(thinker = thinkercap.next; thinker != &thinkercap; thinker = thinker->next)
+        {
+            if (thinker->function.acp1 != (actionf_p1)P_MobjThinker)
+                continue;
+
+            mo = (const mobj_t*)thinker;
+
+            if(mo->flags & MF_SOLID || mo == player->mo)
+                continue;
+
+            // Found a mobj
+            moArray[moCount++] = mo;
+            if(moCount >= 1000)
+                break;
+        }
+        moInit = true;
+    }
+
+    ++tryCount;
+    if(tryCount % 4 != 0)
+        return;
+
+    if(!moCount)
+        I_Error("Nothing in the level!");
+
+    mo = moArray[rand() % moCount];
+    P_TeleportMove(player->mo, mo->x, mo->y);
+    player->mo->angle = rand();
+
+    G_ScreenShot();
+
+    if(tryCount >= 128)
+        I_Error("Posted %d screenshots", tryCount/4);
+}
  
 //
 // G_Ticker
@@ -917,6 +964,12 @@ void G_Ticker (void)
 		G_ReadDemoTiccmd (cmd); 
 	    if (demorecording) 
 		G_WriteDemoTiccmd (cmd);
+
+        // IOANCH: -auto-screenshot
+        if(!demoplayback && !demorecording && M_CheckParm("-auto-screenshot"))
+        {
+            teleportAndTakeShot(players + i);
+        }
 	    
 	    // check for turbo cheats
 
