@@ -146,6 +146,7 @@ int             testcontrols_mousespeed;
  
 // Demo tracing stuff
 boolean         g_tracingDemo;
+const char     *g_demoLogPath;
 fixed_t        *g_demoTrace;
 int             g_demoTraceAlloc;
 int             g_demoTraceSize;
@@ -2270,13 +2271,54 @@ void G_TimeDemo (char* name)
     gameaction = ga_playdemo; 
 } 
  
-void G_HashDemo(char* name)
+void G_HashDemo(char* name, const char *logFileName)
 {
     g_tracingDemo = true;
+    g_demoLogPath = logFileName;
     G_TimeDemo(name);
 }
- 
-/* 
+
+//
+// writeDemoLogFile
+//
+// Writes the demo log file now
+//
+static void writeDemoLogFile(FILE *f, const char *md5)
+{
+    // -iwad, -file, -deh
+    int p;
+    p = M_CheckParmWithArgs("-iwad", 1);
+    if(p)
+    {
+        fprintf(f, "-iwad %s ", myargv[p + 1]);
+    }
+    p = M_CheckParmWithArgs("-file", 1);
+    if(p)
+    {
+        fprintf(f, "-file ");
+        while(++p != myargc && myargv[p][0] != '-')
+        {
+            fprintf(f, "%s ", myargv[p]);
+        }
+    }
+    p = M_CheckParmWithArgs("-deh", 1);
+    if(p)
+    {
+        fprintf(f, "-deh ");
+        while(++p != myargc && myargv[p][0] != '-')
+        {
+            fprintf(f, "%s ", myargv[p]);
+        }
+    }
+    p = M_CheckParmWithArgs("-hashdemo", 1);
+    if(p)
+    {
+        fprintf(f, "-hashdemo %s ", myargv[p + 1]);
+    }
+    fprintf(f, "%s\n", md5);
+}
+
+/*
 =================== 
 = 
 = G_CheckDemoStatus 
@@ -2285,7 +2327,7 @@ void G_HashDemo(char* name)
 = Returns true if a new demo loop action will take place 
 =================== 
 */ 
- 
+
 boolean G_CheckDemoStatus (void) 
 { 
     int             endtime; 
@@ -2311,6 +2353,11 @@ boolean G_CheckDemoStatus (void)
         demoplayback = false;
 	if(g_tracingDemo && md5)
 	{
+            FILE *f = fopen(g_demoLogPath, "at");
+            if(!f)
+                I_Error("Failed opening %s\n", g_demoLogPath);
+            writeDemoLogFile(f, md5);
+            fclose(f);
 	    I_Error ("timed %i gametics in %i realtics (%f fps);\ndemo hash %s",
                  gametic, realtics, fps, md5);
 	}

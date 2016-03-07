@@ -1512,7 +1512,9 @@ void D_DoomMain (void)
         //
 	p = M_CheckParmWithArgs("-timedemo", 1);
 	if(!p)
-	    p = M_CheckParmWithArgs("-hashdemo", 1);
+        {
+            p = M_CheckParmWithArgs("-hashdemo", 2);
+        }
     }
 
     if (p)
@@ -1862,10 +1864,10 @@ void D_DoomMain (void)
 	D_DoomLoop ();  // never returns
     }
     
-    p = M_CheckParmWithArgs("-hashdemo", 1);
+    p = M_CheckParmWithArgs("-hashdemo", 2);
     if (p)
     {
-	G_HashDemo(demolumpname);
+	G_HashDemo(demolumpname, myargv[p + 2]);
 	D_DoomLoop();
     }
 	
