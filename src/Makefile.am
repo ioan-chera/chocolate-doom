@@ -29,7 +29,7 @@ COMMON_SOURCE_FILES=\
 i_main.c                                   \
 i_system.c           i_system.h            \
 m_argv.c             m_argv.h              \
-m_misc.c             m_misc.h
+m_misc.c             m_misc.h      md5.c
 
 # Dedicated server (chocolate-server):
 
