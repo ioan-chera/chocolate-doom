@@ -312,6 +312,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\md5.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\memio.h"
 				>
 			</File>
@@ -628,6 +632,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\doom\deh_bexstr.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\deh_io.c"
 				>
 			</File>
@@ -733,6 +741,10 @@
 			</File>
 			<File
 				RelativePath="..\src\m_misc.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\md5.c"
 				>
 			</File>
 			<File
