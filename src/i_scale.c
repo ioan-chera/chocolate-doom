@@ -28,10 +28,6 @@
 #include "m_argv.h"
 #include "z_zone.h"
 
-#if defined(_MSC_VER) && !defined(__cplusplus)
-#define inline __inline
-#endif
-
 // Should be I_VideoBuffer
 
 static byte *src_buffer;
@@ -987,7 +983,7 @@ static boolean I_Stretch5x(int x1, int y1, int x2, int y2)
     }
 
     // test hack for Porsche Monty... scan line simulation:
-    // See here: http://www.doomworld.com/vb/post/962612
+    // See here: https://www.doomworld.com/vb/post/962612
 
     if (M_CheckParm("-scanline") > 0)
     {
@@ -1391,5 +1387,5 @@ screen_mode_t mode_squash_4x = {
 // ratio and have slightly larger borders than to have slightly smaller
 // windowboxing borders. It also means that the aspect ratio is correct
 // when running at 1280x1024. See bug #460 for more details, or this
-// post: http://www.doomworld.com/vb/post/1316735
+// post: https://www.doomworld.com/vb/post/1316735
 

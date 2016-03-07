@@ -25,7 +25,7 @@
 #include "SDL.h"
 #include "SDL_mixer.h"
 
-#include "dbopl.h"
+#include "opl3.h"
 
 #include "opl.h"
 #include "opl_internal.h"
@@ -70,7 +70,8 @@ static uint64_t pause_offset;
 
 // OPL software emulator structure.
 
-static Chip opl_chip;
+static opl3_chip opl_chip;
+static int opl_opl3mode;
 
 // Temporary mixing buffer used by the mixing callback.
 
@@ -164,15 +165,7 @@ static void FillBuffer(int16_t *buffer, unsigned int nsamples)
 
     assert(nsamples < mixing_freq);
 
-    Chip__GenerateBlock2(&opl_chip, nsamples, mix_buffer);
-
-    // Mix into the destination buffer, doubling up into stereo.
-
-    for (i=0; i<nsamples; ++i)
-    {
-        buffer[i * 2] = (int16_t) mix_buffer[i];
-        buffer[i * 2 + 1] = (int16_t) mix_buffer[i];
-    }
+    OPL3_GenerateStream(&opl_chip, buffer, nsamples);
 }
 
 // Callback function to fill a new sound buffer:
@@ -351,13 +344,12 @@ static int OPL_SDL_Init(unsigned int port_base)
 
     // Mix buffer:
 
-    mix_buffer = malloc(mixing_freq * sizeof(uint32_t));
+    mix_buffer = malloc(mixing_freq * sizeof(uint32_t) * 2);
 
     // Create the emulator structure:
 
-    DBOPL_InitTables();
-    Chip__Chip(&opl_chip);
-    Chip__Setup(&opl_chip, mixing_freq);
+    OPL3_Reset(&opl_chip, mixing_freq);
+    opl_opl3mode = 0;
 
     callback_mutex = SDL_CreateMutex();
     callback_queue_mutex = SDL_CreateMutex();
@@ -371,6 +363,11 @@ static int OPL_SDL_Init(unsigned int port_base)
 static unsigned int OPL_SDL_PortRead(opl_port_t port)
 {
     unsigned int result = 0;
+
+    if (port == OPL_REGISTER_PORT_OPL3)
+    {
+        return 0xff;
+    }
 
     if (timer1.enabled && current_time > timer1.expire_time)
     {
@@ -439,8 +436,11 @@ static void WriteRegister(unsigned int reg_num, unsigned int value)
 
             break;
 
+        case OPL_REG_NEW:
+            opl_opl3mode = value & 0x01;
+
         default:
-            Chip__WriteReg(&opl_chip, reg_num, value);
+            OPL3_WriteRegBuffered(&opl_chip, reg_num, value);
             break;
     }
 }
@@ -450,6 +450,10 @@ static void OPL_SDL_PortWrite(opl_port_t port, unsigned int value)
     if (port == OPL_REGISTER_PORT)
     {
         register_num = value;
+    }
+    else if (port == OPL_REGISTER_PORT_OPL3)
+    {
+        register_num = value | 0x100;
     }
     else if (port == OPL_DATA_PORT)
     {
