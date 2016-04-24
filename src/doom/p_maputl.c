@@ -331,6 +331,38 @@ void P_LineOpening (line_t* linedef)
 // THING POSITION SETTING
 //
 
+//
+// P_LogThingPosition
+//
+// haleyjd 04/15/2010: thing position logging for debugging demo problems.
+// Pass a NULL mobj to close the log.
+//
+#ifdef THING_LOGGING
+void P_LogThingPosition(const mobj_t *mo, const char *caller)
+{
+    static FILE *thinglog;
+
+    if(!thinglog)
+        thinglog = fopen("thinglog.txt", "w");
+
+    if(!mo)
+    {
+        if(thinglog)
+            fclose(thinglog);
+        thinglog = NULL;
+        return;
+    }
+
+    if(thinglog)
+    {
+        fprintf(thinglog,
+                "%010d:%s::%+010d:%+010d:%+010d:%+010d:%+010d\n",
+                gametic, caller, (int)(mo->info - mobjinfo), mo->x, mo->y, mo->z, mo->flags);
+    }
+}
+#else
+#define P_LogThingPosition(a, b)
+#endif
 
 //
 // P_UnsetThingPosition
@@ -343,6 +375,8 @@ void P_UnsetThingPosition (mobj_t* thing)
 {
     int		blockx;
     int		blocky;
+
+    P_LogThingPosition(thing, "unset");
 
     if ( ! (thing->flags & MF_NOSECTOR) )
     {
@@ -396,6 +430,7 @@ P_SetThingPosition (mobj_t* thing)
     int			blocky;
     mobj_t**		link;
 
+    P_LogThingPosition(thing, " set ");
     
     // link into subsector
     ss = R_PointInSubsector (thing->x,thing->y);
