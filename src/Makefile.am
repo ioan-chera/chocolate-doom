@@ -133,13 +133,19 @@ i_oplmusic.c                               \
 midifile.c           midifile.h            \
 mus2mid.c            mus2mid.h
 
+# source files needed for FEATURE_REMOTE_CONTROL
+
+FEATURE_REMOTE_CONTROL_SOURCE_FILES =      \
+rc_main.c            rc_main.h
+
 # Some games support dehacked patches, some don't:
 
 SOURCE_FILES = $(COMMON_SOURCE_FILES)              \
                $(GAME_SOURCE_FILES)                \
                $(FEATURE_WAD_MERGE_SOURCE_FILES)   \
                $(FEATURE_SOUND_SOURCE_FILES)       \
-               $(FEATURE_MULTIPLAYER_SOURCE_FILES)
+               $(FEATURE_MULTIPLAYER_SOURCE_FILES) \
+               $(FEATURE_REMOTE_CONTROL_SOURCE_FILES)
 
 SOURCE_FILES_WITH_DEH = $(SOURCE_FILES)                    \
                         $(FEATURE_DEHACKED_SOURCE_FILES)

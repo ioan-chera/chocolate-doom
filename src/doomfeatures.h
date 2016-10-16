@@ -35,6 +35,10 @@
 
 #define FEATURE_SOUND 1
 
+// Enable remote control
+
+#define FEATURE_REMOTE_CONTROL 1
+
 #endif /* #ifndef DOOM_FEATURES_H */
 
 
