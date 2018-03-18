@@ -41,6 +41,9 @@
 #define RC_RETRY_DOWNTIME_MS 10000  // how long to wait in case of serious error
 
 #define RC_ERROR_FAILURE 1          // Thread failure
+#define RC_PORT 6666                // default port
+#define RC_MAX_SOCKETS 8            // maximum clients (roughly)
+#define RC_MAX_RETRIES 30
 
 //
 // Internal pipe opcodes
@@ -51,6 +54,11 @@ typedef enum rc_opcode_e
 } rc_opcode_t;
 
 static SDL_Thread *rc_thread;       // thread handle
+static TCPsocket rc_server_sock;    // server socket
+static TCPsocket rc_internal_sock;  // internal client
+static TCPsocket rc_client_socks[RC_MAX_SOCKETS];   // only the clients
+static int rc_num_clients;          // the number of clients
+static SDLNet_SocketSet rc_set;     // listening socket set
 
 #ifdef _WIN32
 #error not implemented in Windows
@@ -95,6 +103,70 @@ static void RC_removeFromFdSet(int fd)
 //
 static int RC_threadFunc(void *data)
 {
+    int check;
+    int retries = 0;
+    boolean quit = false;
+    TCPsocket new_sock;
+    int i;
+
+    while (!quit)
+    {
+        check = SDLNet_CheckSockets(rc_set, (Uint32)-1);
+        if (check == -1)
+        {
+            SDL_Delay(100);
+            if (retries++ >= RC_MAX_RETRIES)
+            {
+                return RC_ERROR_FAILURE;
+            }
+            continue;   // retry
+        }
+
+        if (check > 0)
+        {
+            if (SDLNet_SocketReady(rc_server_sock))
+            {
+                --check;
+                new_sock = SDLNet_TCP_Accept(rc_server_sock);
+                if (new_sock)
+                {
+                    for (i = 0; i < RC_MAX_SOCKETS; ++i)
+                    {
+                        if (!rc_client_socks[i])
+                        {
+                            continue;
+                        }
+                        if (SDLNet_AddSocket(rc_set, new_sock) == -1)
+                        {
+                            SDLNet_TCP_Close(new_sock);
+                            new_sock = NULL;
+                            break;
+                        }
+                        rc_client_socks[i] = new_sock;
+                        new_sock = NULL;
+                        break;
+                    }
+                    // if not null, it wasn't handled
+                    if (new_sock)
+                    {
+                        SDLNet_TCP_Close(new_sock);
+                    }
+                }
+            }
+            if (!check)
+            {
+                continue;
+            }
+            if (SDLNet_SocketReady(rc_internal_sock))
+            {
+                rc_opcode_t opcode = RC_OPCODE_QUIT;
+                int result = SDLNet_TCP_Recv(rc_internal_sock, &opcode, sizeof(opcode));
+
+            }
+        }
+    }
+
+
 #ifdef _WIN32
 #error not implemented in Windows
 #else
@@ -197,57 +269,73 @@ static void RC_closePipe(void)
 //
 static boolean RC_createServer(void)
 {
-#ifdef _WIN32
-#error not implemented for Windows
-#else
-    struct sockaddr_un local;
-    socklen_t local_len;
+    IPaddress ip, lo;
 
-    if (pipe(rc_pipe) == -1)
+    if (rc_server_sock)
+    {
+        return true;    // already init
+    }
+    if (SDLNet_Init() == -1)
     {
         return false;
     }
 
-    rc_socket = socket(AF_UNIX, SOCK_STREAM, 0);
-    if (rc_socket == -1)
+    // Create the server
+    if (SDLNet_ResolveHost(&ip, NULL, RC_PORT) == -1)
     {
-        RC_closePipe();
+        SDLNet_Quit();
+        return false;
+    }
+    rc_server_sock = SDLNet_TCP_Open(&ip);
+    if (!rc_server_sock)
+    {
+        SDLNet_Quit();
         return false;
     }
 
+    // Create the internal client
 
-    memset(&local, 0, sizeof(local));
-    local.sun_family = AF_UNIX;
-#ifdef __APPLE__
-#error not implemented on macOS
-#else
-    M_StringCopy(local.sun_path + 1, RC_SERVER_NAME,
-                 sizeof(local.sun_path) - 1);
-#endif
-
-    local_len = offsetof(struct sockaddr_un, sun_path)
-        + sizeof(RC_SERVER_NAME);  // this includes the null separator
-
-    if (bind(rc_socket, (struct sockaddr *)&local, local_len) == -1)
+    if (SDLNet_ResolveHost(&lo, "127.0.0.1", RC_PORT) == -1)
     {
-        close(rc_socket);
-        rc_socket = -1;
-        RC_closePipe();
+        SDLNet_TCP_Close(rc_server_sock);
+        rc_server_sock = NULL;
+        SDLNet_Quit();
+        return false;
+    }
+    rc_internal_sock = SDLNet_TCP_Open(&lo);
+    if (!rc_internal_sock)
+    {
+        SDLNet_TCP_Close(rc_server_sock);
+        rc_server_sock = NULL;
+        SDLNet_Quit();
         return false;
     }
 
-    if (listen(rc_socket, SOMAXCONN) == -1)
+    // Create the listening set
+    rc_set = SDLNet_AllocSocketSet(RC_MAX_SOCKETS);
+    if (!rc_set)
     {
-        close(rc_socket);
-        rc_socket = -1;
-        RC_closePipe();
+        SDLNet_TCP_Close(rc_internal_sock);
+        rc_internal_sock = NULL;
+        SDLNet_TCP_Close(rc_server_sock);
+        rc_server_sock = NULL;
+        SDLNet_Quit();
         return false;
     }
 
-    RC_addToFdSet(rc_socket);
-    RC_addToFdSet(rc_pipe[0]);
-
-#endif
+    // Add the listened values
+    if (SDLNet_TCP_AddSocket(rc_set, rc_server_sock) == -1
+        || SDLNet_TCP_AddSocket(rc_set, rc_internal_sock) == -1)
+    {
+        SDLNet_FreeSocketSet(rc_set);
+        rc_set = NULL;
+        SDLNet_TCP_Close(rc_internal_sock);
+        rc_internal_sock = NULL;
+        SDLNet_TCP_Close(rc_server_sock);
+        rc_server_sock = NULL;
+        SDLNet_Quit();
+        return false;
+    }
 
     return true;
 }
@@ -295,23 +383,24 @@ static void RC_safeWrite(int fd, void *msg, size_t size)
 // Cleans up resources (may be plat dependent)
 static void RC_cleanUp(void)
 {
-#ifdef _WIN32
-#error not implemented in Windows
-#else
     int i;
-    for (i = 0; i <= rc_fdmax; ++i)
+
+    SDLNet_FreeSocketSet(rc_set);
+    rc_set = NULL;
+    SDLNet_TCP_Close(rc_internal_sock);
+    rc_internal_sock = NULL;
+    SDLNet_TCP_Close(rc_server_sock);
+    rc_server_sock = NULL;
+    SDLNet_Quit();
+
+    for (i = 0; i < RC_MAX_SOCKETS; ++i)
     {
-        if (FD_ISSET(i, &rc_fds))
+        if (rc_client_socks[i])
         {
-            close(i);
+            SDLNet_TCP_Close(rc_client_socks[i]);
+            rc_client_socks[i] = NULL;
         }
     }
-
-    FD_ZERO(&rc_fds);
-    rc_fdmax = -1;
-    rc_socket = -1;
-    RC_closePipe();
-#endif
 }
 
 //
