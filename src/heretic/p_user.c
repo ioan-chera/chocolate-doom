@@ -779,7 +779,7 @@ void P_ArtiTele(player_t * player)
     if (deathmatch)
     {
         selections = deathmatch_p - deathmatchstarts;
-        i = P_Random() % selections;
+        i = P_RandomC(pr_hereticartiteleport) % selections;
         destX = deathmatchstarts[i].x << FRACBITS;
         destY = deathmatchstarts[i].y << FRACBITS;
         destAngle = ANG45 * (deathmatchstarts[i].angle / 45);

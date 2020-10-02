@@ -42,12 +42,12 @@ void T_LightFlash(lightflash_t * flash)
     if (flash->sector->lightlevel == flash->maxlight)
     {
         flash->sector->lightlevel = flash->minlight;
-        flash->count = (P_Random() & flash->mintime) + 1;
+        flash->count = (P_RandomC(pr_lights) & flash->mintime) + 1;
     }
     else
     {
         flash->sector->lightlevel = flash->maxlight;
-        flash->count = (P_Random() & flash->maxtime) + 1;
+        flash->count = (P_RandomC(pr_lights) & flash->maxtime) + 1;
     }
 
 }
@@ -75,7 +75,7 @@ void P_SpawnLightFlash(sector_t * sector)
     flash->minlight = P_FindMinSurroundingLight(sector, sector->lightlevel);
     flash->maxtime = 64;
     flash->mintime = 7;
-    flash->count = (P_Random() & flash->maxtime) + 1;
+    flash->count = (P_RandomC(pr_lights) & flash->maxtime) + 1;
 }
 
 //==================================================================
@@ -134,7 +134,7 @@ void P_SpawnStrobeFlash(sector_t * sector, int fastOrSlow, int inSync)
     sector->special = 0;        // nothing special about it during gameplay
 
     if (!inSync)
-        flash->count = (P_Random() & 7) + 1;
+        flash->count = (P_RandomC(pr_lights) & 7) + 1;
     else
         flash->count = 1;
 }

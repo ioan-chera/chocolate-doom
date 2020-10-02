@@ -252,7 +252,7 @@ void SB_Ticker(void)
 
     if (leveltime & 1)
     {
-        ChainWiggle = P_Random() & 1;
+        ChainWiggle = P_RandomC(pr_chainwiggle) & 1;
     }
     curHealth = players[consoleplayer].mo->health;
     if (curHealth < 0)

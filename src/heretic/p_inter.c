@@ -951,7 +951,7 @@ void P_KillMobj(mobj_t * source, mobj_t * target)
     {                           // Normal death
         P_SetMobjState(target, target->info->deathstate);
     }
-    target->tics -= P_Random() & 3;
+    target->tics -= P_RandomC(pr_killtics) & 3;
 //      I_StartSound(&actor->r, actor->info->deathsound);
 }
 
@@ -968,13 +968,13 @@ void P_MinotaurSlam(mobj_t * source, mobj_t * target)
 
     angle = R_PointToAngle2(source->x, source->y, target->x, target->y);
     angle >>= ANGLETOFINESHIFT;
-    thrust = 16 * FRACUNIT + (P_Random() << 10);
+    thrust = 16 * FRACUNIT + (P_RandomC(pr_mincharge) << 10);
     target->momx += FixedMul(thrust, finecosine[angle]);
     target->momy += FixedMul(thrust, finesine[angle]);
     P_DamageMobj(target, NULL, NULL, HITDICE(6));
     if (target->player)
     {
-        target->reactiontime = 14 + (P_Random() & 7);
+        target->reactiontime = 14 + (P_RandomC(pr_mincharge) & 7);
     }
 }
 
@@ -988,12 +988,12 @@ void P_TouchWhirlwind(mobj_t * target)
 {
     int randVal;
 
-    target->angle += P_SubRandom() << 20;
-    target->momx += P_SubRandom() << 10;
-    target->momy += P_SubRandom() << 10;
+    target->angle += P_SubRandomC(pr_whirlwind) << 20;
+    target->momx += P_SubRandomC(pr_whirlwind) << 10;
+    target->momy += P_SubRandomC(pr_whirlwind) << 10;
     if (leveltime & 16 && !(target->flags2 & MF2_BOSS))
     {
-        randVal = P_Random();
+        randVal = P_RandomC(pr_whirlwind);
         if (randVal > 160)
         {
             randVal = 160;
@@ -1354,7 +1354,7 @@ void P_DamageMobj
         thrust = damage * (FRACUNIT >> 3) * 150 / target->info->mass;
         // make fall forwards sometimes
         if ((damage < 40) && (damage > target->health)
-            && (target->z - inflictor->z > 64 * FRACUNIT) && (P_Random() & 1))
+            && (target->z - inflictor->z > 64 * FRACUNIT) && (P_RandomC(pr_damagemobj) & 1))
         {
             ang += ANG180;
             thrust *= 4;
@@ -1462,7 +1462,7 @@ void P_DamageMobj
         P_KillMobj(source, target);
         return;
     }
-    if ((P_Random() < target->info->painchance)
+    if ((P_RandomC(pr_painchance) < target->info->painchance)
         && !(target->flags & MF_SKULLFLY))
     {
         target->flags |= MF_JUSTHIT;    // fight back!

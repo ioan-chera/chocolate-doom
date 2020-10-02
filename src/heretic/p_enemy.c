@@ -220,7 +220,7 @@ boolean P_CheckMissileRange(mobj_t * actor)
     {
         dist = 200;
     }
-    if (P_Random() < dist)
+    if (P_RandomC(pr_missrange) < dist)
     {
         return (false);
     }
@@ -322,7 +322,7 @@ boolean P_TryWalk(mobj_t * actor)
     {
         return (false);
     }
-    actor->movecount = P_Random() & 15;
+    actor->movecount = P_RandomC(pr_trywalk) & 15;
     return (true);
 }
 
@@ -378,7 +378,7 @@ void P_NewChaseDir(mobj_t * actor)
     }
 
 // try other directions
-    if (P_Random() > 200 || abs(deltay) > abs(deltax))
+    if (P_RandomC(pr_newchase) > 200 || abs(deltay) > abs(deltax))
     {
         tdir = d[1];
         d[1] = d[2];
@@ -413,7 +413,7 @@ void P_NewChaseDir(mobj_t * actor)
             return;
     }
 
-    if (P_Random() & 1)         /*randomly determine direction of search */
+    if (P_RandomC(pr_newchasedir) & 1)         /*randomly determine direction of search */
     {
         for (tdir = DI_EAST; tdir <= DI_SOUTHEAST; tdir++)
         {
@@ -494,7 +494,7 @@ boolean P_LookForMonsters(mobj_t * actor)
         {                       // Out of range
             continue;
         }
-        if (P_Random() < 16)
+        if (P_RandomC(pr_madmelee) < 16)
         {                       // Skip
             continue;
         }
@@ -573,7 +573,7 @@ boolean P_LookForPlayers(mobj_t * actor, boolean allaround)
             {                   // Player is sneaking - can't detect
                 return (false);
             }
-            if (P_Random() < 225)
+            if (P_RandomC(pr_ghostsneak) < 225)
             {                   // Player isn't sneaking, but still didn't detect
                 return (false);
             }
@@ -779,9 +779,9 @@ void A_Chase(mobj_t * actor)
 //
 // make active sound
 //
-    if (actor->info->activesound && P_Random() < 3)
+    if (actor->info->activesound && P_RandomC(pr_see) < 3)
     {
-        if (actor->type == MT_WIZARD && P_Random() < 128)
+        if (actor->type == MT_WIZARD && P_RandomC(pr_lookact) < 128)
         {
             S_StartSound(actor, actor->info->seesound);
         }
@@ -813,7 +813,7 @@ void A_FaceTarget(mobj_t * actor)
                                    actor->target->y);
     if (actor->target->flags & MF_SHADOW)
     {                           // Target is a ghost
-        actor->angle += P_SubRandom() << 21;
+        actor->angle += P_SubRandomC(pr_facetarget) << 21;
     }
 }
 
@@ -842,14 +842,14 @@ void A_DripBlood(mobj_t * actor)
     mobj_t *mo;
     int r1,r2;
 
-    r1 = P_SubRandom();
-    r2 = P_SubRandom();
+    r1 = P_SubRandomC(pr_dripblood);
+    r2 = P_SubRandomC(pr_dripblood);
 
     mo = P_SpawnMobj(actor->x + (r2 << 11),
                      actor->y + (r1 << 11), actor->z,
                      MT_BLOOD);
-    mo->momx = P_SubRandom() << 10;
-    mo->momy = P_SubRandom() << 10;
+    mo->momx = P_SubRandomC(pr_dripblood) << 10;
+    mo->momy = P_SubRandomC(pr_dripblood) << 10;
     mo->flags2 |= MF2_LOGRAV;
 }
 
@@ -873,7 +873,7 @@ void A_KnightAttack(mobj_t * actor)
     }
     // Throw axe
     S_StartSound(actor, actor->info->attacksound);
-    if (actor->type == MT_KNIGHTGHOST || P_Random() < 40)
+    if (actor->type == MT_KNIGHTGHOST || P_RandomC(pr_knightat2) < 40)
     {                           // Red axe
         P_SpawnMissile(actor, actor->target, MT_REDAXE);
         return;
@@ -893,12 +893,12 @@ void A_ImpExplode(mobj_t * actor)
     mobj_t *mo;
 
     mo = P_SpawnMobj(actor->x, actor->y, actor->z, MT_IMPCHUNK1);
-    mo->momx = P_SubRandom() << 10;
-    mo->momy = P_SubRandom() << 10;
+    mo->momx = P_SubRandomC(pr_impcrash) << 10;
+    mo->momy = P_SubRandomC(pr_impcrash) << 10;
     mo->momz = 9 * FRACUNIT;
     mo = P_SpawnMobj(actor->x, actor->y, actor->z, MT_IMPCHUNK2);
-    mo->momx = P_SubRandom() << 10;
-    mo->momy = P_SubRandom() << 10;
+    mo->momx = P_SubRandomC(pr_impcrash) << 10;
+    mo->momy = P_SubRandomC(pr_impcrash) << 10;
     mo->momz = 9 * FRACUNIT;
     if (actor->special1.i == 666)
     {                           // Extreme death crash
@@ -914,12 +914,12 @@ void A_ImpExplode(mobj_t * actor)
 
 void A_BeastPuff(mobj_t * actor)
 {
-    if (P_Random() > 64)
+    if (P_RandomC(pr_puffy) > 64)
     {
         int r1,r2,r3;
-        r1 = P_SubRandom();
-        r2 = P_SubRandom();
-        r3 = P_SubRandom();
+        r1 = P_SubRandomC(pr_puffy);
+        r2 = P_SubRandomC(pr_puffy);
+        r3 = P_SubRandomC(pr_puffy);
         P_SpawnMobj(actor->x + (r3 << 10),
                     actor->y + (r2 << 10),
                     actor->z + (r1 << 10), MT_PUFFY);
@@ -941,7 +941,7 @@ void A_ImpMeAttack(mobj_t * actor)
     S_StartSound(actor, actor->info->attacksound);
     if (P_CheckMeleeRange(actor))
     {
-        P_DamageMobj(actor->target, actor, actor, 5 + (P_Random() & 7));
+        P_DamageMobj(actor->target, actor, actor, 5 + (P_RandomC(pr_impmelee) & 7));
     }
 }
 
@@ -957,7 +957,7 @@ void A_ImpMsAttack(mobj_t * actor)
     angle_t an;
     int dist;
 
-    if (!actor->target || P_Random() > 64)
+    if (!actor->target || P_RandomC(pr_impcharge) > 64)
     {
         P_SetMobjState(actor, actor->info->seestate);
         return;
@@ -995,7 +995,7 @@ void A_ImpMsAttack2(mobj_t * actor)
     S_StartSound(actor, actor->info->attacksound);
     if (P_CheckMeleeRange(actor))
     {
-        P_DamageMobj(actor->target, actor, actor, 5 + (P_Random() & 7));
+        P_DamageMobj(actor->target, actor, actor, 5 + (P_RandomC(pr_impmelee2) & 7));
         return;
     }
     P_SpawnMissile(actor, actor->target, MT_IMPBALL);
@@ -1390,7 +1390,7 @@ void P_DSparilTeleport(mobj_t * actor)
     {                           // No spots
         return;
     }
-    i = P_Random();
+    i = P_RandomC(pr_sorctele2);
     do
     {
         i++;
@@ -1429,7 +1429,7 @@ void A_Srcr2Decide(mobj_t * actor)
     {                           // No spots
         return;
     }
-    if (P_Random() < chance[actor->health / (actor->info->spawnhealth / 8)])
+    if (P_RandomC(pr_sorctele1) < chance[actor->health / (actor->info->spawnhealth / 8)])
     {
         P_DSparilTeleport(actor);
     }
@@ -1456,7 +1456,7 @@ void A_Srcr2Attack(mobj_t * actor)
         return;
     }
     chance = actor->health < actor->info->spawnhealth / 2 ? 96 : 48;
-    if (P_Random() < chance)
+    if (P_RandomC(pr_soratk2) < chance)
     {                           // Wizard spawners
         P_SpawnMissileAngle(actor, MT_SOR2FX2,
                             actor->angle - ANG45, FRACUNIT / 2);
@@ -1483,9 +1483,9 @@ void A_BlueSpark(mobj_t * actor)
     for (i = 0; i < 2; i++)
     {
         mo = P_SpawnMobj(actor->x, actor->y, actor->z, MT_SOR2FXSPARK);
-        mo->momx = P_SubRandom() << 9;
-        mo->momy = P_SubRandom() << 9;
-        mo->momz = FRACUNIT + (P_Random() << 8);
+        mo->momx = P_SubRandomC(pr_bluespark) << 9;
+        mo->momy = P_SubRandomC(pr_bluespark) << 9;
+        mo->momz = FRACUNIT + (P_RandomC(pr_bluespark) << 8);
     }
 }
 
@@ -1629,7 +1629,7 @@ void A_MinotaurDecide(mobj_t * actor)
     if (target->z + target->height > actor->z
         && target->z + target->height < actor->z + actor->height
         && dist < 8 * 64 * FRACUNIT
-        && dist > 1 * 64 * FRACUNIT && P_Random() < 150)
+        && dist > 1 * 64 * FRACUNIT && P_RandomC(pr_mindist) < 150)
     {                           // Charge attack
         // Don't call the state function right away
         P_SetMobjStateNF(actor, S_MNTR_ATK4_1);
@@ -1641,7 +1641,7 @@ void A_MinotaurDecide(mobj_t * actor)
         actor->special1.i = 35 / 2;       // Charge duration
     }
     else if (target->z == target->floorz
-             && dist < 9 * 64 * FRACUNIT && P_Random() < 220)
+             && dist < 9 * 64 * FRACUNIT && P_RandomC(pr_mindist) < 220)
     {                           // Floor fire attack
         P_SetMobjState(actor, S_MNTR_ATK3_1);
         actor->special2.i = 0;
@@ -1747,7 +1747,7 @@ void A_MinotaurAtk3(mobj_t * actor)
             S_StartSound(mo, sfx_minat1);
         }
     }
-    if (P_Random() < 192 && actor->special2.i == 0)
+    if (P_RandomC(pr_minatk3) < 192 && actor->special2.i == 0)
     {
         P_SetMobjState(actor, S_MNTR_ATK3_4);
         actor->special2.i = 1;
@@ -1765,8 +1765,8 @@ void A_MntrFloorFire(mobj_t * actor)
     mobj_t *mo;
     int r1, r2;
 
-    r1 = P_SubRandom();
-    r2 = P_SubRandom();
+    r1 = P_SubRandomC(pr_mffire);
+    r2 = P_SubRandomC(pr_mffire);
 
     actor->z = actor->floorz;
     mo = P_SpawnMobj(actor->x + (r2 << 10),
@@ -1834,7 +1834,7 @@ void A_HeadAttack(mobj_t * actor)
     }
     dist = P_AproxDistance(actor->x - target->x, actor->y - target->y)
         > 8 * 64 * FRACUNIT;
-    randAttack = P_Random();
+    randAttack = P_RandomC(pr_lichattack);
     if (randAttack < atkResolve1[dist])
     {                           // Ice ball
         P_SpawnMissile(actor, target, MT_HEADFX1);
@@ -1897,7 +1897,7 @@ void A_WhirlwindSeek(mobj_t * actor)
     }
     if ((actor->special2.i -= 3) < 0)
     {
-        actor->special2.i = 58 + (P_Random() & 31);
+        actor->special2.i = 58 + (P_RandomC(pr_whirlseek) & 31);
         S_StartSound(actor, sfx_hedat3);
     }
     if (actor->special1.m
@@ -2004,7 +2004,7 @@ void A_ClinkAttack(mobj_t * actor)
     S_StartSound(actor, actor->info->attacksound);
     if (P_CheckMeleeRange(actor))
     {
-        damage = ((P_Random() % 7) + 3);
+        damage = ((P_RandomC(pr_clinkatk) % 7) + 3);
         P_DamageMobj(actor->target, actor, actor, damage);
     }
 }
@@ -2128,15 +2128,15 @@ void P_DropItem(mobj_t * source, mobjtype_t type, int special, int chance)
 {
     mobj_t *mo;
 
-    if (P_Random() > chance)
+    if (P_RandomC(pr_hdrop1) > chance)
     {
         return;
     }
     mo = P_SpawnMobj(source->x, source->y,
                      source->z + (source->height >> 1), type);
-    mo->momx = P_SubRandom() << 8;
-    mo->momy = P_SubRandom() << 8;
-    mo->momz = FRACUNIT * 5 + (P_Random() << 10);
+    mo->momx = P_SubRandomC(pr_hdropmom) << 8;
+    mo->momy = P_SubRandomC(pr_hdropmom) << 8;
+    mo->momz = FRACUNIT * 5 + (P_RandomC(pr_hdropmom) << 10);
     mo->flags |= MF_DROPPED;
     mo->health = special;
 }
@@ -2212,7 +2212,7 @@ void A_Explode(mobj_t * actor)
             damage = 24;
             break;
         case MT_SOR2FX1:       // D'Sparil missile
-            damage = 80 + (P_Random() & 31);
+            damage = 80 + (P_RandomC(pr_sorfx1xpl) & 31);
             break;
         default:
             break;
@@ -2234,7 +2234,7 @@ void A_PodPain(mobj_t * actor)
     int chance;
     mobj_t *goo;
 
-    chance = P_Random();
+    chance = P_RandomC(pr_podpain);
     if (chance < 128)
     {
         return;
@@ -2245,9 +2245,9 @@ void A_PodPain(mobj_t * actor)
         goo = P_SpawnMobj(actor->x, actor->y,
                           actor->z + 48 * FRACUNIT, MT_PODGOO);
         goo->target = actor;
-        goo->momx = P_SubRandom() << 9;
-        goo->momy = P_SubRandom() << 9;
-        goo->momz = FRACUNIT / 2 + (P_Random() << 9);
+        goo->momx = P_SubRandomC(pr_podpain) << 9;
+        goo->momy = P_SubRandomC(pr_podpain) << 9;
+        goo->momz = FRACUNIT / 2 + (P_RandomC(pr_podpain) << 9);
     }
 }
 
@@ -2298,7 +2298,7 @@ void A_MakePod(mobj_t * actor)
         return;
     }
     P_SetMobjState(mo, S_POD_GROW1);
-    P_ThrustMobj(mo, P_Random() << 24, (fixed_t) (4.5 * FRACUNIT));
+    P_ThrustMobj(mo, P_RandomC(pr_makepod) << 24, (fixed_t) (4.5 * FRACUNIT));
     S_StartSound(mo, sfx_newpod);
     actor->special1.i++;          // Increment generated pod count
     mo->special2.m = actor;       // Link the generator to the pod
@@ -2418,8 +2418,8 @@ void A_SpawnTeleGlitter(mobj_t * actor)
     mobj_t *mo;
     int r1, r2;
 
-    r1 = P_Random();
-    r2 = P_Random();
+    r1 = P_RandomC(pr_tglit);
+    r2 = P_RandomC(pr_tglit);
     mo = P_SpawnMobj(actor->x + ((r2 & 31) - 16) * FRACUNIT,
                      actor->y + ((r1 & 31) - 16) * FRACUNIT,
                      actor->subsector->sector->floorheight, MT_TELEGLITTER);
@@ -2437,8 +2437,8 @@ void A_SpawnTeleGlitter2(mobj_t * actor)
     mobj_t *mo;
     int r1, r2;
 
-    r1 = P_Random();
-    r2 = P_Random();
+    r1 = P_RandomC(pr_tglit);
+    r2 = P_RandomC(pr_tglit);
     mo = P_SpawnMobj(actor->x + ((r2 & 31) - 16) * FRACUNIT,
                      actor->y + ((r1 & 31) - 16) * FRACUNIT,
                      actor->subsector->sector->floorheight, MT_TELEGLITTER2);
@@ -2497,7 +2497,7 @@ void A_InitKeyGizmo(mobj_t * gizmo)
 
 void A_VolcanoSet(mobj_t * volcano)
 {
-    volcano->tics = 105 + (P_Random() & 127);
+    volcano->tics = 105 + (P_RandomC(pr_settics) & 127);
 }
 
 //----------------------------------------------------------------------------
@@ -2513,17 +2513,17 @@ void A_VolcanoBlast(mobj_t * volcano)
     mobj_t *blast;
     angle_t angle;
 
-    count = 1 + (P_Random() % 3);
+    count = 1 + (P_RandomC(pr_volcano) % 3);
     for (i = 0; i < count; i++)
     {
         blast = P_SpawnMobj(volcano->x, volcano->y, volcano->z + 44 * FRACUNIT, MT_VOLCANOBLAST);       // MT_VOLCANOBLAST
         blast->target = volcano;
-        angle = P_Random() << 24;
+        angle = P_RandomC(pr_volcano) << 24;
         blast->angle = angle;
         angle >>= ANGLETOFINESHIFT;
         blast->momx = FixedMul(1 * FRACUNIT, finecosine[angle]);
         blast->momy = FixedMul(1 * FRACUNIT, finesine[angle]);
-        blast->momz = (fixed_t)(2.5 * FRACUNIT) + (P_Random() << 10);
+        blast->momz = (fixed_t)(2.5 * FRACUNIT) + (P_RandomC(pr_volcano) << 10);
         S_StartSound(blast, sfx_volsht);
         P_CheckMissileSpawn(blast);
     }
@@ -2558,7 +2558,7 @@ void A_VolcBallImpact(mobj_t * ball)
         angle >>= ANGLETOFINESHIFT;
         tiny->momx = FixedMul((fixed_t)(FRACUNIT * .7), finecosine[angle]);
         tiny->momy = FixedMul((fixed_t)(FRACUNIT * .7), finesine[angle]);
-        tiny->momz = FRACUNIT + (P_Random() << 9);
+        tiny->momz = FRACUNIT + (P_RandomC(pr_svolcano) << 9);
         P_CheckMissileSpawn(tiny);
     }
 }
@@ -2578,9 +2578,9 @@ void A_SkullPop(mobj_t * actor)
     mo = P_SpawnMobj(actor->x, actor->y, actor->z + 48 * FRACUNIT,
                      MT_BLOODYSKULL);
     //mo->target = actor;
-    mo->momx = P_SubRandom() << 9;
-    mo->momy = P_SubRandom() << 9;
-    mo->momz = FRACUNIT * 2 + (P_Random() << 6);
+    mo->momx = P_SubRandomC(pr_skullpop) << 9;
+    mo->momy = P_SubRandomC(pr_skullpop) << 9;
+    mo->momz = FRACUNIT * 2 + (P_RandomC(pr_skullpop) << 6);
     // Attach player mobj to bloody skull
     player = actor->player;
     actor->player = NULL;

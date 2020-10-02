@@ -57,6 +57,15 @@ int P_Random(void)
     return rndtable[prndindex];
 }
 
+//
+// Classed random
+//
+int P_RandomC(pr_class pc)
+{
+    // TODO
+    return P_Random();
+}
+
 int M_Random(void)
 {
     rndindex = (rndindex + 1) & 0xff;
@@ -73,4 +82,10 @@ int P_SubRandom (void)
 {
     int r = P_Random();
     return r - P_Random();
+}
+
+int P_SubRandomC(pr_class pc)
+{
+    // TODO
+    return P_SubRandom();
 }

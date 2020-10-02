@@ -194,7 +194,7 @@ int EV_DoPlat(line_t * line, plattype_e type, int amount)
                 if (plat->high < sec->floorheight)
                     plat->high = sec->floorheight;
                 plat->wait = 35 * PLATWAIT;
-                plat->status = P_Random() & 1;
+                plat->status = P_RandomC(pr_plats) & 1;
                 S_StartSound(&sec->soundorg, sfx_pstart);
                 break;
         }

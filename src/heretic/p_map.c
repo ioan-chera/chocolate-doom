@@ -351,7 +351,7 @@ boolean PIT_CheckThing(mobj_t * thing)
     // Check for skulls slamming into things
     if (tmthing->flags & MF_SKULLFLY)
     {
-        damage = ((P_Random() % 8) + 1) * tmthing->damage;
+        damage = ((P_RandomC(pr_skullfly) % 8) + 1) * tmthing->damage;
         P_DamageMobj(thing, tmthing, tmthing, damage);
         tmthing->flags &= ~MF_SKULLFLY;
         tmthing->momx = tmthing->momy = tmthing->momz = 0;
@@ -397,7 +397,7 @@ boolean PIT_CheckThing(mobj_t * thing)
                 P_RipperBlood(tmthing);
             }
             S_StartSound(tmthing, sfx_ripslop);
-            damage = ((P_Random() & 3) + 2) * tmthing->damage;
+            damage = ((P_RandomC(pr_rip) & 3) + 2) * tmthing->damage;
             P_DamageMobj(thing, tmthing, tmthing->target, damage);
             if (thing->flags2 & MF2_PUSHABLE
                 && !(tmthing->flags2 & MF2_CANNOTPUSH))
@@ -409,10 +409,10 @@ boolean PIT_CheckThing(mobj_t * thing)
             return (true);
         }
         // Do damage
-        damage = ((P_Random() % 8) + 1) * tmthing->damage;
+        damage = ((P_RandomC(pr_damage) % 8) + 1) * tmthing->damage;
         if (damage)
         {
-            if (!(thing->flags & MF_NOBLOOD) && P_Random() < 192)
+            if (!(thing->flags & MF_NOBLOOD) && P_RandomC(pr_drawblood) < 192)
             {
                 P_BloodSplatter(tmthing->x, tmthing->y, tmthing->z, thing);
             }
@@ -1374,7 +1374,7 @@ boolean PTR_ShootTraverse(intercept_t * in)
     }
     if (la_damage)
     {
-        if (!(in->d.thing->flags & MF_NOBLOOD) && P_Random() < 192)
+        if (!(in->d.thing->flags & MF_NOBLOOD) && P_RandomC(pr_puffblood) < 192)
         {
             P_BloodSplatter(x, y, z, in->d.thing);
         }
@@ -1656,8 +1656,8 @@ boolean PIT_ChangeSector(mobj_t * thing)
         // spray blood in a random direction
         mo = P_SpawnMobj(thing->x, thing->y, thing->z + thing->height / 2,
                          MT_BLOOD);
-        mo->momx = P_SubRandom() << 12;
-        mo->momy = P_SubRandom() << 12;
+        mo->momx = P_SubRandomC(pr_crush) << 12;
+        mo->momy = P_SubRandomC(pr_crush) << 12;
     }
 
     return true;                // keep checking (crush other things)   

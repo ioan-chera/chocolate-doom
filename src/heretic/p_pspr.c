@@ -277,7 +277,7 @@ void P_RepositionMace(mobj_t * mo)
     subsector_t *ss;
 
     P_UnsetThingPosition(mo);
-    spot = P_Random() % MaceSpotCount;
+    spot = P_RandomC(pr_moverandom) % MaceSpotCount;
     mo->x = MaceSpots[spot].x;
     mo->y = MaceSpots[spot].y;
     ss = R_PointInSubsector(mo->x, mo->y);
@@ -302,11 +302,11 @@ void P_CloseWeapons(void)
     {                           // No maces placed
         return;
     }
-    if (!deathmatch && P_Random() < 64)
+    if (!deathmatch && P_RandomC(pr_spotspawn) < 64)
     {                           // Sometimes doesn't show up if not in deathmatch
         return;
     }
-    spot = P_Random() % MaceSpotCount;
+    spot = P_RandomC(pr_spotspawn) % MaceSpotCount;
     P_SpawnMobj(MaceSpots[spot].x, MaceSpots[spot].y, ONFLOORZ, MT_WMACE);
 }
 
@@ -601,7 +601,7 @@ void A_WeaponReady(player_t * player, pspdef_t * psp)
     }
     // Check for staff PL2 active sound
     if ((player->readyweapon == wp_staff)
-        && (psp->state == &states[S_STAFFREADY2_1]) && P_Random() < 128)
+        && (psp->state == &states[S_STAFFREADY2_1]) && P_RandomC(pr_wpnreadysnd) < 128)
     {
         S_StartSound(player->mo, sfx_stfcrk);
     }
@@ -894,9 +894,9 @@ void A_StaffAttackPL1(player_t * player, pspdef_t * psp)
     int damage;
     int slope;
 
-    damage = 5 + (P_Random() & 15);
+    damage = 5 + (P_RandomC(pr_staff) & 15);
     angle = player->mo->angle;
-    angle += P_SubRandom() << 18;
+    angle += P_SubRandomC(pr_staffangle) << 18;
     slope = P_AimLineAttack(player->mo, angle, MELEERANGE);
     PuffType = MT_STAFFPUFF;
     P_LineAttack(player->mo, angle, MELEERANGE, slope, damage);
@@ -923,9 +923,9 @@ void A_StaffAttackPL2(player_t * player, pspdef_t * psp)
     int slope;
 
     // P_inter.c:P_DamageMobj() handles target momentums
-    damage = 18 + (P_Random() & 63);
+    damage = 18 + (P_RandomC(pr_staff2) & 63);
     angle = player->mo->angle;
-    angle += P_SubRandom() << 18;
+    angle += P_SubRandomC(pr_staffangle) << 18;
     slope = P_AimLineAttack(player->mo, angle, MELEERANGE);
     PuffType = MT_STAFFPUFF2;
     P_LineAttack(player->mo, angle, MELEERANGE, slope, damage);
@@ -959,7 +959,7 @@ void A_FireBlasterPL1(player_t * player, pspdef_t * psp)
     angle = mo->angle;
     if (player->refire)
     {
-        angle += P_SubRandom() << 18;
+        angle += P_SubRandomC(pr_blaster) << 18;
     }
     PuffType = MT_BLASTERPUFF1;
     P_LineAttack(mo, angle, MISSILERANGE, bulletslope, damage);
@@ -1001,11 +1001,11 @@ void A_FireGoldWandPL1(player_t * player, pspdef_t * psp)
     mo = player->mo;
     player->ammo[am_goldwand] -= USE_GWND_AMMO_1;
     P_BulletSlope(mo);
-    damage = 7 + (P_Random() & 7);
+    damage = 7 + (P_RandomC(pr_goldwand) & 7);
     angle = mo->angle;
     if (player->refire)
     {
-        angle += P_SubRandom() << 18;
+        angle += P_SubRandomC(pr_goldwand) << 18;
     }
     PuffType = MT_GOLDWANDPUFF1;
     P_LineAttack(mo, angle, MISSILERANGE, bulletslope, damage);
@@ -1037,7 +1037,7 @@ void A_FireGoldWandPL2(player_t * player, pspdef_t * psp)
     angle = mo->angle - (ANG45 / 8);
     for (i = 0; i < 5; i++)
     {
-        damage = 1 + (P_Random() & 7);
+        damage = 1 + (P_RandomC(pr_goldwand2) & 7);
         P_LineAttack(mo, angle, MISSILERANGE, bulletslope, damage);
         angle += ((ANG45 / 8) * 2) / 4;
     }
@@ -1097,7 +1097,7 @@ void A_FireMacePL1(player_t * player, pspdef_t * psp)
 {
     mobj_t *ball;
 
-    if (P_Random() < 28)
+    if (P_RandomC(pr_firemace) < 28)
     {
         A_FireMacePL1B(player, psp);
         return;
@@ -1107,10 +1107,10 @@ void A_FireMacePL1(player_t * player, pspdef_t * psp)
         return;
     }
     player->ammo[am_mace] -= USE_MACE_AMMO_1;
-    psp->sx = ((P_Random() & 3) - 2) * FRACUNIT;
-    psp->sy = WEAPONTOP + (P_Random() & 3) * FRACUNIT;
+    psp->sx = ((P_RandomC(pr_firemace) & 3) - 2) * FRACUNIT;
+    psp->sy = WEAPONTOP + (P_RandomC(pr_firemace) & 3) * FRACUNIT;
     ball = P_SPMAngle(player->mo, MT_MACEFX1, player->mo->angle
-                      + (((P_Random() & 7) - 4) << 24));
+                      + (((P_RandomC(pr_firemace) & 7) - 4) << 24));
     if (ball)
     {
         ball->special1.i = 16;    // tics till dropoff
@@ -1394,11 +1394,11 @@ void A_BoltSpark(mobj_t * bolt)
 {
     mobj_t *spark;
 
-    if (P_Random() > 50)
+    if (P_RandomC(pr_boltspark) > 50)
     {
         spark = P_SpawnMobj(bolt->x, bolt->y, bolt->z, MT_CRBOWFX4);
-        spark->x += P_SubRandom() << 10;
-        spark->y += P_SubRandom() << 10;
+        spark->x += P_SubRandomC(pr_boltspark) << 10;
+        spark->y += P_SubRandomC(pr_boltspark) << 10;
     }
 }
 
@@ -1419,7 +1419,7 @@ void A_FireSkullRodPL1(player_t * player, pspdef_t * psp)
     player->ammo[am_skullrod] -= USE_SKRD_AMMO_1;
     mo = P_SpawnPlayerMissile(player->mo, MT_HORNRODFX1);
     // Randomize the first frame
-    if (mo && P_Random() > 128)
+    if (mo && P_RandomC(pr_skullrod) > 128)
     {
         P_SetMobjState(mo, S_HRODFX1_2);
     }
@@ -1696,8 +1696,8 @@ void A_FirePhoenixPL2(player_t * player, pspdef_t * psp)
     }
     pmo = player->mo;
     angle = pmo->angle;
-    x = pmo->x + (P_SubRandom() << 9);
-    y = pmo->y + (P_SubRandom() << 9);
+    x = pmo->x + (P_SubRandomC(pr_phoenixrod2) << 9);
+    y = pmo->y + (P_SubRandomC(pr_phoenixrod2) << 9);
     z = pmo->z + 26 * FRACUNIT + ((player->lookdir) << FRACBITS) / 173;
     if (pmo->flags2 & MF2_FEETARECLIPPED)
     {
@@ -1766,35 +1766,35 @@ void A_GauntletAttack(player_t * player, pspdef_t * psp)
     int randVal;
     fixed_t dist;
 
-    psp->sx = ((P_Random() & 3) - 2) * FRACUNIT;
-    psp->sy = WEAPONTOP + (P_Random() & 3) * FRACUNIT;
+    psp->sx = ((P_RandomC(pr_gauntlets) & 3) - 2) * FRACUNIT;
+    psp->sy = WEAPONTOP + (P_RandomC(pr_gauntlets) & 3) * FRACUNIT;
     angle = player->mo->angle;
     if (player->powers[pw_weaponlevel2])
     {
         damage = HITDICE(2);
         dist = 4 * MELEERANGE;
-        angle += P_SubRandom() << 17;
+        angle += P_SubRandomC(pr_gauntletsangle) << 17;
         PuffType = MT_GAUNTLETPUFF2;
     }
     else
     {
         damage = HITDICE(2);
         dist = MELEERANGE + 1;
-        angle += P_SubRandom() << 18;
+        angle += P_SubRandomC(pr_gauntletsangle) << 18;
         PuffType = MT_GAUNTLETPUFF1;
     }
     slope = P_AimLineAttack(player->mo, angle, dist);
     P_LineAttack(player->mo, angle, dist, slope, damage);
     if (!linetarget)
     {
-        if (P_Random() > 64)
+        if (P_RandomC(pr_gauntlets) > 64)
         {
             player->extralight = !player->extralight;
         }
         S_StartSound(player->mo, sfx_gntful);
         return;
     }
-    randVal = P_Random();
+    randVal = P_RandomC(pr_gauntlets);
     if (randVal < 64)
     {
         player->extralight = 0;
