@@ -14,6 +14,7 @@
 // GNU General Public License for more details.
 //
 
+#include "d_loop.h"
 #include "m_random.h"
 
 /*
@@ -51,6 +52,99 @@ const unsigned int rndtable[256] = {
 int rndindex = 0;
 int prndindex = 0;
 
+#define CASE(a) case a: return #a
+
+//
+// Converts enum value to string
+//
+static const char *M_prcString(pr_class pc)
+{
+    switch(pc)
+    {
+        CASE(pr_blaster);
+        CASE(pr_bluespark);
+        CASE(pr_boltspark);
+        CASE(pr_chainwiggle);
+        CASE(pr_clinkatk);
+        CASE(pr_crush);
+        CASE(pr_damage);
+        CASE(pr_damagemobj);
+        CASE(pr_dmspawn);
+        CASE(pr_drawblood);
+        CASE(pr_dripblood);
+        CASE(pr_envirospot);
+        CASE(pr_envirotics);
+        CASE(pr_facetarget);
+        CASE(pr_firemace);
+        CASE(pr_floathealth);
+        CASE(pr_gauntlets);
+        CASE(pr_gauntletsangle);
+        CASE(pr_ghostsneak);
+        CASE(pr_goldwand);
+        CASE(pr_goldwand2);
+        CASE(pr_hdrop1);
+        CASE(pr_hdropmom);
+        CASE(pr_hereticartiteleport);
+        CASE(pr_impcharge);
+        CASE(pr_impcrash);
+        CASE(pr_impmelee);
+        CASE(pr_impmelee2);
+        CASE(pr_killtics);
+        CASE(pr_knightat2);
+        CASE(pr_lastlook);
+        CASE(pr_lichattack);
+        CASE(pr_lights);
+        CASE(pr_lookact);
+        CASE(pr_madmelee);
+        CASE(pr_makepod);
+        CASE(pr_mffire);
+        CASE(pr_minatk3);
+        CASE(pr_mincharge);
+        CASE(pr_mindist);
+        CASE(pr_missrange);
+        CASE(pr_moverandom);
+        CASE(pr_newchase);
+        CASE(pr_newchasedir);
+        CASE(pr_painchance);
+        CASE(pr_phoenixrod2);
+        CASE(pr_plats);
+        CASE(pr_podpain);
+        CASE(pr_puffblood);
+        CASE(pr_puffy);
+        CASE(pr_ravenblood);
+        CASE(pr_respawn);
+        CASE(pr_rip);
+        CASE(pr_ripperblood);
+        CASE(pr_see);
+        CASE(pr_settics);
+        CASE(pr_shadow);
+        CASE(pr_skullfly);
+        CASE(pr_skullpop);
+        CASE(pr_skullrod);
+        CASE(pr_soratk2);
+        CASE(pr_sorctele1);
+        CASE(pr_sorctele2);
+        CASE(pr_sorfx1xpl);
+        CASE(pr_spawnfloat);
+        CASE(pr_spawnpuff);
+        CASE(pr_spawnthing);
+        CASE(pr_splash);
+        CASE(pr_spotspawn);
+        CASE(pr_staff);
+        CASE(pr_staff2);
+        CASE(pr_staffangle);
+        CASE(pr_svolcano);
+        CASE(pr_tglit);
+        CASE(pr_trywalk);
+        CASE(pr_volcano);
+        CASE(pr_whirlseek);
+        CASE(pr_whirlwind);
+        CASE(pr_wpnreadysnd);
+        default:
+            return "WARNING: Unexpected prclass";
+    }
+}
+
 int P_Random(void)
 {
     prndindex = (prndindex + 1) & 0xff;
@@ -62,8 +156,9 @@ int P_Random(void)
 //
 int P_RandomC(pr_class pc)
 {
-    // TODO
-    return P_Random();
+    int result = P_Random();
+    printf("%s: %d: %d\n", M_prcString(pc), gametic, result);
+    return result;
 }
 
 int M_Random(void)
@@ -84,8 +179,11 @@ int P_SubRandom (void)
     return r - P_Random();
 }
 
+//
+// Classed SubRandom
+//
 int P_SubRandomC(pr_class pc)
 {
-    // TODO
-    return P_SubRandom();
+    int r = P_RandomC(pc);
+    return r - P_RandomC(pc);
 }
