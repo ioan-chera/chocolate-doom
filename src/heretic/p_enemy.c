@@ -870,7 +870,7 @@ void A_KnightAttack(mobj_t * actor)
     }
     if (P_CheckMeleeRange(actor))
     {
-        P_DamageMobj(actor->target, actor, actor, HITDICE(3));
+        P_DamageMobj(actor->target, actor, actor, HITDICE(3, pr_knightat1));
         S_StartSound(actor, sfx_kgtat2);
         return;
     }
@@ -1212,7 +1212,7 @@ void A_MummyAttack(mobj_t * actor)
     S_StartSound(actor, actor->info->attacksound);
     if (P_CheckMeleeRange(actor))
     {
-        P_DamageMobj(actor->target, actor, actor, HITDICE(2));
+        P_DamageMobj(actor->target, actor, actor, HITDICE(2, pr_mumpunch));
         S_StartSound(actor, sfx_mumat2);
         return;
     }
@@ -1238,7 +1238,7 @@ void A_MummyAttack2(mobj_t * actor)
     //S_StartSound(actor, actor->info->attacksound);
     if (P_CheckMeleeRange(actor))
     {
-        P_DamageMobj(actor->target, actor, actor, HITDICE(2));
+        P_DamageMobj(actor->target, actor, actor, HITDICE(2, pr_mumpunch2));
         return;
     }
     mo = P_SpawnMissile(actor, actor->target, MT_MUMMYFX1);
@@ -1324,7 +1324,7 @@ void A_Srcr1Attack(mobj_t * actor)
     S_StartSound(actor, actor->info->attacksound);
     if (P_CheckMeleeRange(actor))
     {
-        P_DamageMobj(actor->target, actor, actor, HITDICE(8));
+        P_DamageMobj(actor->target, actor, actor, HITDICE(8, pr_sorc1atk));
         return;
     }
     if (actor->health > (actor->info->spawnhealth / 3) * 2)
@@ -1455,7 +1455,7 @@ void A_Srcr2Attack(mobj_t * actor)
     S_StartSound(NULL, actor->info->attacksound);
     if (P_CheckMeleeRange(actor))
     {
-        P_DamageMobj(actor->target, actor, actor, HITDICE(20));
+        P_DamageMobj(actor->target, actor, actor, HITDICE(20, pr_soratk1));
         return;
     }
     chance = actor->health < actor->info->spawnhealth / 2 ? 96 : 48;
@@ -1598,7 +1598,7 @@ void A_MinotaurAtk1(mobj_t * actor)
     S_StartSound(actor, sfx_stfpow);
     if (P_CheckMeleeRange(actor))
     {
-        P_DamageMobj(actor->target, actor, actor, HITDICE(4));
+        P_DamageMobj(actor->target, actor, actor, HITDICE(4, pr_minatk1));
         if ((player = actor->target->player) != NULL)
         {                       // Squish the player
             player->deltaviewheight = -16 * FRACUNIT;
@@ -1701,7 +1701,7 @@ void A_MinotaurAtk2(mobj_t * actor)
     S_StartSound(actor, sfx_minat2);
     if (P_CheckMeleeRange(actor))
     {
-        P_DamageMobj(actor->target, actor, actor, HITDICE(5));
+        P_DamageMobj(actor->target, actor, actor, HITDICE(5, pr_minatk2));
         return;
     }
     mo = P_SpawnMissile(actor, actor->target, MT_MNTRFX1);
@@ -1736,7 +1736,7 @@ void A_MinotaurAtk3(mobj_t * actor)
     }
     if (P_CheckMeleeRange(actor))
     {
-        P_DamageMobj(actor->target, actor, actor, HITDICE(5));
+        P_DamageMobj(actor->target, actor, actor, HITDICE(5, pr_minatk3));
         if ((player = actor->target->player) != NULL)
         {                       // Squish the player
             player->deltaviewheight = -16 * FRACUNIT;
@@ -1795,7 +1795,7 @@ void A_BeastAttack(mobj_t * actor)
     S_StartSound(actor, actor->info->attacksound);
     if (P_CheckMeleeRange(actor))
     {
-        P_DamageMobj(actor->target, actor, actor, HITDICE(3));
+        P_DamageMobj(actor->target, actor, actor, HITDICE(3, pr_beastbite));
         return;
     }
     P_SpawnMissile(actor, actor->target, MT_BEASTBALL);
@@ -1832,7 +1832,7 @@ void A_HeadAttack(mobj_t * actor)
     A_FaceTarget(actor);
     if (P_CheckMeleeRange(actor))
     {
-        P_DamageMobj(target, actor, actor, HITDICE(6));
+        P_DamageMobj(target, actor, actor, HITDICE(6, pr_lichmelee));
         return;
     }
     dist = P_AproxDistance(actor->x - target->x, actor->y - target->y)
@@ -2067,7 +2067,7 @@ void A_WizAtk3(mobj_t * actor)
     S_StartSound(actor, actor->info->attacksound);
     if (P_CheckMeleeRange(actor))
     {
-        P_DamageMobj(actor->target, actor, actor, HITDICE(4));
+        P_DamageMobj(actor->target, actor, actor, HITDICE(4, pr_wizatk));
         return;
     }
     mo = P_SpawnMissile(actor, actor->target, MT_WIZFX1);

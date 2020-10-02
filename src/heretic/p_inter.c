@@ -971,7 +971,7 @@ void P_MinotaurSlam(mobj_t * source, mobj_t * target)
     thrust = 16 * FRACUNIT + (P_RandomC(pr_mincharge) << 10);
     target->momx += FixedMul(thrust, finecosine[angle]);
     target->momy += FixedMul(thrust, finesine[angle]);
-    P_DamageMobj(target, NULL, NULL, HITDICE(6));
+    P_DamageMobj(target, NULL, NULL, HITDICE(6, pr_mincharge));
     if (target->player)
     {
         target->reactiontime = 14 + (P_RandomC(pr_mincharge) & 7);

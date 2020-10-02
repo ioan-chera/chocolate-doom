@@ -866,7 +866,7 @@ void A_BeakAttackPL2(player_t * player, pspdef_t * psp)
     int damage;
     int slope;
 
-    damage = HITDICE(4);
+    damage = HITDICER(4);
     angle = player->mo->angle;
     slope = P_AimLineAttack(player->mo, angle, MELEERANGE);
     PuffType = MT_BEAKPUFF;
@@ -955,7 +955,7 @@ void A_FireBlasterPL1(player_t * player, pspdef_t * psp)
     S_StartSound(mo, sfx_gldhit);
     player->ammo[am_blaster] -= USE_BLSR_AMMO_1;
     P_BulletSlope(mo);
-    damage = HITDICE(4);
+    damage = HITDICE(4, pr_blaster);
     angle = mo->angle;
     if (player->refire)
     {
@@ -1771,14 +1771,14 @@ void A_GauntletAttack(player_t * player, pspdef_t * psp)
     angle = player->mo->angle;
     if (player->powers[pw_weaponlevel2])
     {
-        damage = HITDICE(2);
+        damage = HITDICE(2, pr_gauntlets);
         dist = 4 * MELEERANGE;
         angle += P_SubRandomC(pr_gauntletsangle) << 17;
         PuffType = MT_GAUNTLETPUFF2;
     }
     else
     {
-        damage = HITDICE(2);
+        damage = HITDICE(2, pr_gauntlets);
         dist = MELEERANGE + 1;
         angle += P_SubRandomC(pr_gauntletsangle) << 18;
         PuffType = MT_GAUNTLETPUFF1;

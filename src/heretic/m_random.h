@@ -18,13 +18,15 @@
 #define HERETIC_M_RANDOM_H
 
 // Most damage defined using HITDICE
-#define HITDICE(a) ((1+(P_Random()&7))*a)
+#define HITDICE(a, prc) ((1+(P_RandomC(prc)&7))*a)
+#define HITDICER(a) ((1+(P_Random()&7))*a)
 
 //
 // Randomness class
 //
 typedef enum pr_class
 {
+    pr_beastbite,
     pr_blaster,
     pr_bluespark,
     pr_boltspark,
@@ -55,19 +57,25 @@ typedef enum pr_class
     pr_impmelee,
     pr_impmelee2,
     pr_killtics,
+    pr_knightat1,
     pr_knightat2,
     pr_lastlook,
     pr_lichattack,
+    pr_lichmelee,
     pr_lights,
     pr_lookact,
     pr_madmelee,
     pr_makepod,
     pr_mffire,
+    pr_minatk1,
+    pr_minatk2,
     pr_minatk3,
     pr_mincharge,
     pr_mindist,
     pr_missrange,
     pr_moverandom,
+    pr_mumpunch,
+    pr_mumpunch2,
     pr_newchase,
     pr_newchasedir,
     pr_painchance,
@@ -86,7 +94,9 @@ typedef enum pr_class
     pr_skullfly,
     pr_skullpop,
     pr_skullrod,
+    pr_soratk1,
     pr_soratk2,
+    pr_sorc1atk,
     pr_sorctele1,
     pr_sorctele2,
     pr_sorfx1xpl,
@@ -104,6 +114,7 @@ typedef enum pr_class
     pr_volcano,
     pr_whirlseek,
     pr_whirlwind,
+    pr_wizatk,
     pr_wpnreadysnd,
 } pr_class;
 

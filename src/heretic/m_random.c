@@ -61,6 +61,7 @@ static const char *M_prcString(pr_class pc)
 {
     switch(pc)
     {
+        CASE(pr_beastbite);
         CASE(pr_blaster);
         CASE(pr_bluespark);
         CASE(pr_boltspark);
@@ -91,19 +92,25 @@ static const char *M_prcString(pr_class pc)
         CASE(pr_impmelee);
         CASE(pr_impmelee2);
         CASE(pr_killtics);
+        CASE(pr_knightat1);
         CASE(pr_knightat2);
         CASE(pr_lastlook);
         CASE(pr_lichattack);
+        CASE(pr_lichmelee);
         CASE(pr_lights);
         CASE(pr_lookact);
         CASE(pr_madmelee);
         CASE(pr_makepod);
         CASE(pr_mffire);
+        CASE(pr_minatk1);
+        CASE(pr_minatk2);
         CASE(pr_minatk3);
         CASE(pr_mincharge);
         CASE(pr_mindist);
         CASE(pr_missrange);
         CASE(pr_moverandom);
+        CASE(pr_mumpunch);
+        CASE(pr_mumpunch2);
         CASE(pr_newchase);
         CASE(pr_newchasedir);
         CASE(pr_painchance);
@@ -122,7 +129,9 @@ static const char *M_prcString(pr_class pc)
         CASE(pr_skullfly);
         CASE(pr_skullpop);
         CASE(pr_skullrod);
+        CASE(pr_soratk1);
         CASE(pr_soratk2);
+        CASE(pr_sorc1atk);
         CASE(pr_sorctele1);
         CASE(pr_sorctele2);
         CASE(pr_sorfx1xpl);
@@ -140,6 +149,7 @@ static const char *M_prcString(pr_class pc)
         CASE(pr_volcano);
         CASE(pr_whirlseek);
         CASE(pr_whirlwind);
+        CASE(pr_wizatk);
         CASE(pr_wpnreadysnd);
         default:
             return "WARNING: Unexpected prclass";
