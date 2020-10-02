@@ -1293,7 +1293,7 @@ void P_AmbientSound(void)
                 done = true;
                 break;
             case afxcmd_end:
-                AmbSfxTics = 6 * TICRATE + P_RandomC(pr_envirotics);
+                AmbSfxTics = 6 * TICRATE + P_RandomC(pr_enviroticsend);
                 AmbSfxPtr = LevelAmbientSfx[P_RandomC(pr_envirospot) % AmbSfxCount];
                 done = true;
                 break;

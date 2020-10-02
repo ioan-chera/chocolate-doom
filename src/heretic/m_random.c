@@ -74,6 +74,7 @@ static const char *M_prcString(pr_class pc)
         CASE(pr_dripblood);
         CASE(pr_envirospot);
         CASE(pr_envirotics);
+        CASE(pr_enviroticsend);
         CASE(pr_facetarget);
         CASE(pr_firemace);
         CASE(pr_floathealth);

@@ -38,6 +38,7 @@ typedef enum pr_class
     pr_dripblood,
     pr_envirospot,
     pr_envirotics,
+    pr_enviroticsend,
     pr_facetarget,
     pr_firemace,
     pr_floathealth,
