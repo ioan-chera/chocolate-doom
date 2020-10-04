@@ -743,6 +743,10 @@ void P_MobjThinker(mobj_t * mobj)
 {
     mobj_t *onmo;
 
+    fixed_t befx = mobj->x;
+    fixed_t befy = mobj->y;
+    fixed_t befz = mobj->z;
+
     // Handle X and Y momentums
     if (mobj->momx || mobj->momy || (mobj->flags & MF_SKULLFLY))
     {
@@ -813,6 +817,19 @@ void P_MobjThinker(mobj_t * mobj)
             {                   // mobj was removed
                 return;
             }
+        }
+
+        if((befx != mobj->x || befy != mobj->y || befz != mobj->z) &&
+           !(mobj->flags2 & MF2_FLOATBOB))
+        {
+            printf("%d: MOVEACTOR %d ", gametic, mobj->info->doomednum);
+            if(befx != mobj->x)
+                printf("x %g -> %g, ", befx/65536., mobj->x/65536.);
+            if(befy != mobj->y)
+                printf("y %g -> %g, ", befy/65536., mobj->y/65536.);
+            if(befz != mobj->z)
+                printf("z %g -> %g, ", befz/65536., mobj->z/65536.);
+            puts("");
         }
     }
     else

@@ -848,10 +848,6 @@ boolean P_TryMove(mobj_t * thing, fixed_t x, fixed_t y)
 //
 // the move is ok, so link the thing into its new position
 //
-    printf("%d: MOVEACTOR %d (%g %g %g) -> %g %g\n", gametic,
-           thing->info->doomednum, thing->x/65536., thing->y/65536.,
-           thing->z/65536., x/65536., y/65536.);
-
     P_UnsetThingPosition(thing);
 
     oldx = thing->x;
