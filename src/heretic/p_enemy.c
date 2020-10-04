@@ -258,9 +258,6 @@ boolean P_Move(mobj_t * actor)
     }
     tryx = actor->x + actor->info->speed * xspeed[actor->movedir];
     tryy = actor->y + actor->info->speed * yspeed[actor->movedir];
-    printf("%d: MOVEACTOR %d (%g %g %g) -> %g %g\n", gametic,
-           actor->info->doomednum, actor->x/65536., actor->y/65536.,
-           actor->z/65536., tryx/65536., tryy/65536.);
     if (!P_TryMove(actor, tryx, tryy))
     {                           // open any specials
         if (actor->flags & MF_FLOAT && floatok)
