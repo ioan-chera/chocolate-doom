@@ -833,7 +833,23 @@ void P_MobjThinker(mobj_t * mobj)
         }
     }
     else
-    {                           // Check for monster respawn
+    {
+        if(mobj->player && mobj->health > 0)
+        {
+            if((befx != mobj->x || befy != mobj->y || befz != mobj->z) &&
+               !(mobj->flags2 & MF2_FLOATBOB))
+            {
+                printf("%d: MOVEACTOR %d ", gametic, mobj->info->doomednum);
+                if(befx != mobj->x)
+                    printf("x %g -> %g, ", befx/65536., mobj->x/65536.);
+                if(befy != mobj->y)
+                    printf("y %g -> %g, ", befy/65536., mobj->y/65536.);
+                if(befz != mobj->z)
+                    printf("z %g -> %g, ", befz/65536., mobj->z/65536.);
+                puts("");
+            }
+        }
+        // Check for monster respawn
         if (!(mobj->flags & MF_COUNTKILL))
         {
             return;
